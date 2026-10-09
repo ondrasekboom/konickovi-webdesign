@@ -1,0 +1,717 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manolo Café</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Karla:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap">
+
+<style>
+  /* Manolo Café — single committed identity: deep spruce ground, brass lamplight,
+     concrete neutrals. Not theme-switching: a brand has one room. */
+  :root {
+    --ink:        #10201c;
+    --ink-2:      #17302a;
+    --ink-3:      #1e3c34;
+    --bone:       #f2ede3;
+    --bone-dim:   #cdc7ba;
+    --brass:      #c9903f;
+    --brass-lit:  #e0ab5b;
+    --moss:       #7fa08c;
+    --concrete:   #8b8d86;
+    --line:       rgba(242, 237, 227, 0.14);
+    --line-soft:  rgba(242, 237, 227, 0.08);
+
+    --display: 'Fraunces', 'Georgia', 'Times New Roman', serif;
+    --body: 'Karla', 'Helvetica Neue', Arial, sans-serif;
+    --mono: 'DM Mono', 'Consolas', 'Courier New', monospace;
+
+    --measure: 62ch;
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ink);
+    color: var(--bone);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: var(--grain);
+    opacity: 0.035;
+    pointer-events: none;
+    z-index: 9;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    line-height: 1.06;
+    text-wrap: balance;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  p { margin: 0; }
+
+  a { color: var(--brass-lit); }
+
+  :focus-visible {
+    outline: 2px solid var(--brass-lit);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: 1120px;
+    margin-inline: auto;
+    padding-inline: 28px;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--moss);
+    margin: 0;
+  }
+
+  /* ————— Nav ————— */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(16, 32, 28, 0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .nav-in {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    min-height: 64px;
+  }
+
+  .mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--bone);
+    text-decoration: none;
+    margin-right: auto;
+    --logo-cut: var(--ink);
+  }
+  .mark svg { width: 24px; height: 24px; flex-shrink: 0; }
+  .mark-word {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 21px;
+    letter-spacing: -0.015em;
+    line-height: 1;
+  }
+  .mark-word span { color: var(--brass); }
+
+  .nav-links {
+    display: flex;
+    gap: 26px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-links a {
+    color: var(--bone-dim);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    padding-block: 6px;
+    border-bottom: 1px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+  .nav-links a:hover { color: var(--bone); border-bottom-color: var(--brass); }
+
+  /* ————— Hero: full-bleed photo, headline over it, today's board docked bottom right ————— */
+  .hero {
+    position: relative;
+    height: min(88vh, 860px);
+    min-height: 560px;
+    background: #d9d2c6 url('img/hero.webp') center 40% / cover no-repeat;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(10, 20, 17, 0.62) 0%, rgba(10, 20, 17, 0.28) 45%, rgba(10, 20, 17, 0) 70%),
+      linear-gradient(0deg, rgba(10, 20, 17, 0.35) 0%, rgba(10, 20, 17, 0) 30%);
+    pointer-events: none;
+  }
+
+  .hero-in {
+    position: relative;
+    height: 100%;
+  }
+
+  .hero-copy {
+    position: absolute;
+    left: 28px;
+    right: 28px;
+    top: 28%;
+    max-width: 600px;
+    color: #fff;
+  }
+
+  .hero-copy .eyebrow { color: #e8dfcf; }
+
+  .hero-copy h1 {
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: clamp(44px, 5.6vw, 80px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin-top: 16px;
+    text-shadow: 0 2px 30px rgba(0, 0, 0, 0.25);
+  }
+
+  .hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .hero .btn-ghost { border-color: rgba(255, 255, 255, 0.6); color: #fff; }
+  .hero .btn-ghost:hover { border-color: #fff; color: #fff; }
+
+  /* Today's board, white card docked to the photo's bottom edge */
+  .today {
+    position: absolute;
+    right: 28px;
+    bottom: 0;
+    width: 420px;
+    background: #fff;
+    color: var(--ink);
+    padding: 30px 34px 26px;
+  }
+  .today .eyebrow { color: #4f6f5c; }
+  .today-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(16, 32, 28, 0.14);
+  }
+  .today-date {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: #5b5f58;
+  }
+  .today-list { margin: 0; }
+  .today-list div {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 14px;
+    align-items: baseline;
+    padding: 12px 0;
+    border-bottom: 1px dashed rgba(16, 32, 28, 0.14);
+  }
+  .today-list dt {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #4f6f5c;
+  }
+  .today-list dd {
+    margin: 0;
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  .today-list dd small {
+    display: block;
+    font-family: var(--body);
+    font-size: 13.5px;
+    font-weight: 400;
+    color: #5b5f58;
+    margin-top: 2px;
+  }
+  .today-now {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    font-size: 14.5px;
+    color: #5b5f58;
+  }
+  .today-now i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--brass);
+    box-shadow: 0 0 0 0 rgba(201, 144, 63, 0.6);
+    flex-shrink: 0;
+    animation: pulse 2.2s ease-out infinite;
+  }
+  .today-now b { color: var(--ink); font-weight: 700; }
+  @keyframes pulse {
+    to { box-shadow: 0 0 0 10px rgba(201, 144, 63, 0); }
+  }
+
+  .btn {
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 13px 24px;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: transform .2s, background .2s, color .2s, border-color .2s;
+    display: inline-block;
+  }
+  .btn-fill { background: var(--brass); color: #171104; }
+  .btn-fill:hover { background: var(--brass-lit); transform: translateY(-2px); }
+  .btn-ghost { border-color: var(--line); color: var(--bone); }
+  .btn-ghost:hover { border-color: var(--brass); color: var(--brass-lit); transform: translateY(-2px); }
+
+  /* ————— Generic section ————— */
+  section { padding: 92px 0; }
+
+  .section-head { margin-bottom: 44px; }
+  .section-head h2 {
+    font-size: clamp(34px, 4.6vw, 52px);
+    margin-top: 12px;
+  }
+
+  /* ————— Story ————— */
+  .story {
+    background: var(--ink-2);
+    border-block: 1px solid var(--line-soft);
+  }
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .story-body p + p { margin-top: 20px; }
+  .story-body p {
+    max-width: var(--measure);
+    color: var(--bone-dim);
+  }
+  .story-body strong { color: var(--bone); font-weight: 700; }
+
+  /* Photo slot — swap background-image for a real photograph */
+  .slot {
+    aspect-ratio: 4 / 5;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    background:
+      radial-gradient(120% 90% at 22% 12%, rgba(201,144,63,0.26) 0%, transparent 58%),
+      linear-gradient(155deg, var(--ink-3) 0%, var(--ink) 100%);
+    display: grid;
+    place-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .slot.photo {
+    background:
+      linear-gradient(to top, rgba(10, 20, 17, 0.82) 0%, rgba(10, 20, 17, 0) 42%),
+      var(--photo) center / cover no-repeat,
+      linear-gradient(155deg, var(--ink-3) 0%, var(--ink) 100%);
+  }
+  .slot.photo figcaption { color: var(--bone); }
+
+  .slot figcaption {
+    position: absolute;
+    left: 18px;
+    bottom: 16px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--moss);
+  }
+
+  /* ————— Menu board ————— */
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 52px 48px;
+  }
+  .board-col h3 {
+    font-size: 25px;
+    padding-bottom: 13px;
+    border-bottom: 1px solid var(--brass);
+    margin-bottom: 8px;
+  }
+  .board-col > .note {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--moss);
+    margin-bottom: 18px;
+  }
+
+  .items { list-style: none; margin: 0; padding: 0; }
+  .items li {
+    display: flex;
+    align-items: baseline;
+    gap: 9px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .items li:last-child { border-bottom: 0; }
+  .items .nm { color: var(--bone); }
+  .items .nm small {
+    display: block;
+    font-size: 13px;
+    color: var(--concrete);
+    line-height: 1.4;
+  }
+  .items .ldr {
+    flex: 1;
+    min-width: 14px;
+    border-bottom: 1px dotted rgba(139, 141, 134, 0.5);
+    transform: translateY(-4px);
+  }
+  .items .pr {
+    font-family: var(--mono);
+    font-size: 15px;
+    color: var(--brass-lit);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .roaster {
+    margin-top: 56px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px 26px;
+    padding: 22px 26px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    background: var(--ink-2);
+  }
+  .roaster .eyebrow { flex-shrink: 0; }
+  .roaster p { color: var(--bone-dim); font-size: 15px; max-width: 70ch; }
+
+  /* ————— Signature ————— */
+  .sig {
+    background: var(--ink-2);
+    border-block: 1px solid var(--line-soft);
+  }
+  .sig-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .sig h2 {
+    font-size: clamp(34px, 4.8vw, 56px);
+    margin-top: 12px;
+  }
+  .sig h2 em { font-style: italic; font-weight: 400; color: var(--brass); }
+  .sig p {
+    color: var(--bone-dim);
+    max-width: var(--measure);
+    margin-top: 22px;
+  }
+  .sig-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 28px;
+    list-style: none;
+    padding: 0;
+  }
+  .sig-tags li {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.07em;
+    color: var(--moss);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 6px 13px;
+  }
+
+  /* ————— Footer ————— */
+  footer {
+    background: #0b1714;
+    border-top: 1px solid var(--line-soft);
+    padding: 52px 0 40px;
+  }
+  .foot-in {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 26px 44px;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .foot-in .mark { margin-right: 0; --logo-cut: #0b1714; }
+  .foot-meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.9;
+    color: var(--concrete);
+    letter-spacing: 0.04em;
+  }
+
+  /* ————— Responsive ————— */
+  @media (max-width: 940px) {
+    .board { grid-template-columns: 1fr 1fr; }
+    .story-grid, .sig-grid { grid-template-columns: 1fr; gap: 44px; }
+    .story-fig, .sig-fig { max-width: 420px; }
+    .today { width: 360px; padding: 24px 26px 22px; }
+    .hero-copy { max-width: 440px; }
+  }
+
+  @media (max-width: 700px) {
+    .nav-links { display: none; }
+    .board { grid-template-columns: 1fr; gap: 44px; }
+    section { padding: 68px 0; }
+    /* On phones the photo sits only behind the headline block, so it isn't
+       stretched over the board below it and zoomed in. */
+    .hero { height: auto; min-height: 0; background: var(--ink); }
+    .hero::before { display: none; }
+    .hero-in { height: auto; padding-inline: 0; }
+    .hero-copy {
+      position: static;
+      max-width: none;
+      min-height: 440px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 72px 20px 32px;
+      background:
+        linear-gradient(0deg, rgba(10, 20, 17, 0.85) 0%, rgba(10, 20, 17, 0.55) 45%, rgba(10, 20, 17, 0.05) 80%),
+        #d9d2c6 url('img/hero.webp') 42% center / cover no-repeat;
+    }
+    .hero-copy .eyebrow { font-size: 11px; }
+    .hero-copy h1 { font-size: 38px; margin-top: 12px; }
+    .hero-cta { margin-top: 22px; }
+    .hero-cta .btn { padding: 12px 20px; }
+    .today { position: relative; right: auto; width: auto; padding: 24px 20px 22px; }
+    .today-list div { grid-template-columns: 82px minmax(0, 1fr); gap: 12px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="manolo-tile" viewBox="0 0 24 24">
+    <rect x="1" y="1" width="22" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/>
+    <path d="M12 4 L20 12 L12 20 L4 12 Z" fill="currentColor"/>
+    <circle cx="12" cy="12" r="2.4" style="fill: var(--logo-cut, #000)"/>
+  </symbol>
+</svg>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="mark" href="#top" aria-label="Manolo Café"><svg aria-hidden="true"><use href="#manolo-tile"/></svg><span class="mark-word">Manolo<span>.</span></span></a>
+    <ul class="nav-links">
+      <li><a href="#o-nas">O nás</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#pecivo">Pečivo</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top" role="img" aria-label="Světlý interiér kavárny s kruhovými okny, dřevěnými křesílky a zelení">
+  <div class="wrap hero-in">
+    <div class="hero-copy">
+      <p class="eyebrow">Manolo · specialty kavárna</p>
+      <h1>Kavárna s vlastní pecí a&nbsp;lehkým bistrem</h1>
+      <div class="hero-cta">
+        <a class="btn btn-fill" href="#menu">Prohlédnout menu</a>
+        <a class="btn btn-ghost" href="#o-nas">O nás</a>
+      </div>
+    </div>
+
+    <aside class="today" aria-labelledby="today-title">
+      <div class="today-head">
+        <p class="eyebrow" id="today-title">Dnes na baru</p>
+        <span class="today-date" id="todayDate"></span>
+      </div>
+      <dl class="today-list">
+        <div><dt>Espresso</dt><dd id="tEspresso"></dd></div>
+        <div><dt>Filtr</dt><dd id="tFilter"></dd></div>
+        <div><dt>Koláč dne</dt><dd id="tCake"></dd></div>
+        <div><dt>Polévka</dt><dd id="tSoup"></dd></div>
+      </dl>
+      <p class="today-now"><i aria-hidden="true"></i><span id="tNow"></span></p>
+    </aside>
+  </div>
+</header>
+
+<section class="story" id="o-nas">
+  <div class="wrap story-grid">
+    <div class="story-body">
+      <p class="eyebrow">O nás</p>
+      <h2>Kavárna, kde se nespěchá.</h2>
+      <p style="margin-top:26px">
+        Manolo je místo pro <strong>dobrou kávu</strong>, pečivo z vlastní pece
+        a rozhovory, které se nemusí vejít do přestávky na oběd.
+      </p>
+      <p>
+        Kávu připravujeme pečlivě a nabídku měníme podle toho, co je zrovna
+        trendy. <strong>Pečivo pečeme každé ráno.</strong>
+      </p>
+      <p>
+        Když si nebudete vědět rady s výběrem, zeptejte se nás za barem —
+        od toho tam jsme.
+      </p>
+    </div>
+
+    <figure class="slot photo story-fig" style="margin:0; aspect-ratio: 657 / 633; --photo: url('img/latte.webp')" role="img" aria-label="Cappuccino v bílém šálku s latte art ve tvaru mořského koníka">
+      <figcaption>Z našeho baru</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Menu</p>
+      <h2>Co u nás dostanete</h2>
+    </div>
+
+    <div class="board">
+      <div class="board-col">
+        <h3>Káva</h3>
+        <p class="note">Výběrová káva</p>
+        <ul class="items">
+          <li><span class="nm">Espresso</span><span class="ldr"></span><span class="pr">55</span></li>
+          <li><span class="nm">Flat white</span><span class="ldr"></span><span class="pr">79</span></li>
+          <li><span class="nm">Cappuccino</span><span class="ldr"></span><span class="pr">75</span></li>
+          <li><span class="nm">Caffè latte</span><span class="ldr"></span><span class="pr">79</span></li>
+          <li><span class="nm">Filtrovaná káva<small>Ruční příprava, měnící se nabídka</small></span><span class="ldr"></span><span class="pr">85</span></li>
+          <li><span class="nm">Horká čokoláda</span><span class="ldr"></span><span class="pr">75</span></li>
+        </ul>
+      </div>
+
+      <div class="board-col">
+        <h3>Z pece</h3>
+        <p class="note">Vlastní výroba, denně</p>
+        <ul class="items">
+          <li><span class="nm">Máslový croissant</span><span class="ldr"></span><span class="pr">59</span></li>
+          <li><span class="nm">Mandlový koláč</span><span class="ldr"></span><span class="pr">95</span></li>
+          <li><span class="nm">Sezónní koláč<small>Zeptejte se za barem</small></span><span class="ldr"></span><span class="pr">89</span></li>
+          <li><span class="nm">Sušenka s mořskou solí</span><span class="ldr"></span><span class="pr">55</span></li>
+        </ul>
+      </div>
+
+      <div class="board-col">
+        <h3>Jídlo</h3>
+        <p class="note">Lehké bistro po celý den</p>
+        <ul class="items">
+          <li><span class="nm">Zapečený toast<small>Šunka a sýr</small></span><span class="ldr"></span><span class="pr">145</span></li>
+          <li><span class="nm">Sendvič s pečenou zeleninou</span><span class="ldr"></span><span class="pr">139</span></li>
+          <li><span class="nm">Granola s jogurtem</span><span class="ldr"></span><span class="pr">125</span></li>
+          <li><span class="nm">Polévka dne<small>Podle denní nabídky</small></span><span class="ldr"></span><span class="pr">95</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="roaster">
+      <p class="eyebrow">Káva</p>
+      <p>
+        Pracujeme s <strong style="color:var(--bone)">výběrovou kávou</strong> a nabídka
+        se v průběhu roku mění podle toho, co je právě v sezoně.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="sig" id="pecivo">
+  <div class="wrap sig-grid">
+    <figure class="slot photo sig-fig" style="margin:0; aspect-ratio: 1 / 1; --photo: url('img/pecivo.jpg')" role="img" aria-label="Skořicový šnek z listového těsta na talířku">
+      <figcaption>Z naší pece</figcaption>
+    </figure>
+
+    <div>
+      <p class="eyebrow">Pečivo</p>
+      <h2>Pečeme, <em>jak se patří</em></h2>
+      <p>
+        Croissanty, koláče a sušenky vznikají každé ráno přímo u nás,
+        z poctivých surovin. K dobré kávě není potřeba nic dalšího.
+      </p>
+      <p>
+        Nabídka se mění podle sezóny, takže se vždycky vyplatí kouknout
+        do vitríny.
+      </p>
+      <ul class="sig-tags">
+        <li>Vlastní výroba</li>
+        <li>Pečeme denně</li>
+        <li>Jídlo s sebou</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <a class="mark" href="#top" aria-label="Manolo Café"><svg aria-hidden="true"><use href="#manolo-tile"/></svg><span class="mark-word">Manolo<span>.</span></span></a>
+    <p class="foot-meta">Manolo Café · specialty kavárna</p>
+  </div>
+</footer>
+
+<script>
+  // "Dnes na baru": the board changes with the weekday and the time of day.
+  (function () {
+    const DAYS = [
+      // Sunday first, matching Date.getDay()
+      { e: ['Brazílie', 'čokoláda, lískový oříšek'], f: ['Keňa', 'černý rybíz, grapefruit'], c: 'Jablečný koláč se skořicí', s: 'Houbový krém' },
+      { e: ['Kolumbie', 'karamel, červené jablko'], f: ['Etiopie', 'jasmín, meruňka'], c: 'Mandlový koláč', s: 'Dýňová se zázvorem' },
+      { e: ['Brazílie', 'čokoláda, lískový oříšek'], f: ['Guatemala', 'hnědý cukr, švestka'], c: 'Tvarohový koláč s borůvkami', s: 'Čočková s kmínem' },
+      { e: ['Kolumbie', 'karamel, červené jablko'], f: ['Rwanda', 'červený čaj, brusinka'], c: 'Citronová tartaleta', s: 'Rajčatová s bazalkou' },
+      { e: ['Salvador', 'mléčná čokoláda, med'], f: ['Etiopie', 'jasmín, meruňka'], c: 'Švestkový drobenkáč', s: 'Bramboračka' },
+      { e: ['Brazílie', 'čokoláda, lískový oříšek'], f: ['Keňa', 'černý rybíz, grapefruit'], c: 'Čokoládový brownie', s: 'Hrášková s mátou' },
+      { e: ['Salvador', 'mléčná čokoláda, med'], f: ['Kostarika', 'broskev, med'], c: 'Skořicoví šneci', s: 'Kulajda' }
+    ];
+    const DAY_NAMES = ['neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota'];
+
+    const set = (id, html) => { document.getElementById(id).innerHTML = html; };
+    const bean = ([origin, notes]) => `${origin}<small>${notes}</small>`;
+
+    function render() {
+      const now = new Date();
+      const d = DAYS[now.getDay()];
+      const h = now.getHours();
+
+      set('todayDate', `${DAY_NAMES[now.getDay()]} ${now.getDate()}. ${now.getMonth() + 1}.`);
+      set('tEspresso', bean(d.e));
+      set('tFilter', bean(d.f));
+      set('tCake', d.c);
+      set('tSoup', d.s);
+
+      let fresh;
+      if (h < 11) fresh = '<b>Máslové croissanty</b> právě vytažené z pece';
+      else if (h < 15) fresh = '<b>Zapečené toasty</b> a polévka jsou na baru';
+      else if (h < 19) fresh = `<b>${d.c}</b> vydrží do večera, jestli nás nepředběhnete`;
+      else fresh = 'Na zítřek už <b>kyne těsto</b> na croissanty';
+      set('tNow', fresh);
+    }
+
+    render();
+    setInterval(render, 60000);
+  })();
+</script>

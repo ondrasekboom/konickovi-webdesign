@@ -1,0 +1,941 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lístek · květinový ateliér</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Outfit:wght@400;500;600;700&family=Caveat:wght@500;600&display=swap">
+<style>
+  :root {
+    --ink: #1f2a22;
+    --muted: #5d675f;
+    --paper: #fffdf8;
+    --line: rgba(31,42,34,0.12);
+    --tint: #fff3ea;
+    --accent: #e0513f;
+    --leaf: #3f5e47;
+    --radius: 22px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--tint);
+    line-height: 1.6;
+    transition: background-color 0.6s ease;
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .serif {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+  }
+
+  /* ——— Nav ——— */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 22px 0;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 30px;
+    line-height: 1;
+  }
+
+  .brand svg { width: 30px; height: 30px; }
+
+  .brand small {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-left: 4px;
+    transform: translateY(3px);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .nav-links a { text-decoration: none; opacity: 0.75; }
+  .nav-links a:hover { opacity: 1; }
+
+  /* ——— Hero / configurator ——— */
+  .hero { padding: 28px 0 80px; }
+
+  .hero-head { max-width: 760px; margin-bottom: 40px; }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    transition: color 0.6s ease;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(52px, 8vw, 108px);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+  }
+
+  h1 em {
+    display: block;
+    font-weight: 500;
+    color: var(--accent);
+    transition: color 0.6s ease;
+  }
+
+  .hero-head p {
+    margin-top: 18px;
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 560px;
+  }
+
+  .builder {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: 28px;
+    align-items: stretch;
+  }
+
+  .panel {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 30px;
+  }
+
+  .step + .step { margin-top: 28px; }
+
+  .step-label {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .step-label span {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 22px;
+    font-style: italic;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--accent);
+    transition: color 0.6s ease;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 9px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  }
+
+  .chip:hover { border-color: var(--ink); }
+
+  .chip[aria-pressed="true"] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+
+  .chip .price {
+    font-weight: 500;
+    opacity: 0.65;
+    margin-left: 6px;
+  }
+
+  .say {
+    margin-top: 12px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 21px;
+    line-height: 1.3;
+    color: var(--muted);
+    min-height: 1.3em;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 86px;
+    resize: vertical;
+    font: inherit;
+    font-size: 15px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: var(--tint);
+    color: var(--ink);
+    transition: background-color 0.6s ease;
+  }
+
+  textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .count {
+    display: block;
+    text-align: right;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+  }
+
+  .total-price {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 40px;
+    line-height: 1;
+  }
+
+  .total-price small {
+    display: block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .btn {
+    font: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 14px 24px;
+    border-radius: 999px;
+    border: 0;
+    background: var(--accent);
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.6s ease, transform 0.15s;
+  }
+
+  .btn:hover { transform: translateY(-1px); }
+
+  .note {
+    margin-top: 14px;
+    font-size: 14px;
+    color: var(--muted);
+    min-height: 1.4em;
+  }
+
+  /* Stage with the bouquet */
+  .stage {
+    position: relative;
+    border-radius: var(--radius);
+    background:
+      radial-gradient(60% 55% at 50% 42%, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 70%),
+      var(--paper);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 560px;
+  }
+
+  #bouquet {
+    width: 100%;
+    max-width: 520px;
+    height: auto;
+    display: block;
+  }
+
+  #bouquet .flower { transition: opacity 0.35s ease; }
+
+  .shuffle {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .shuffle:hover { border-color: var(--ink); }
+
+  .tag {
+    position: absolute;
+    left: 7%;
+    bottom: 9%;
+    width: 200px;
+    padding: 16px 18px 18px;
+    background: #fffef9;
+    border-radius: 6px;
+    box-shadow: 0 10px 28px rgba(31,42,34,0.14);
+    transform: rotate(-5deg);
+    font-family: 'Caveat', cursive;
+    font-size: 24px;
+    line-height: 1.15;
+    color: #2b2b2b;
+    word-wrap: break-word;
+  }
+
+  .tag::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(31,42,34,0.35);
+  }
+
+  .tag[hidden] { display: none; }
+
+  .stage-size {
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ——— Sections ——— */
+  section.block { padding: 90px 0; }
+
+  .block-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(38px, 5vw, 60px);
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+  }
+
+  h2 em { color: var(--accent); transition: color 0.6s ease; }
+
+  .block-head p {
+    max-width: 380px;
+    color: var(--muted);
+  }
+
+  .season {
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .season-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .bloom-card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 26px;
+    background: var(--tint);
+    transition: background-color 0.6s ease;
+  }
+
+  .bloom-card svg {
+    width: 84px;
+    height: 84px;
+    display: block;
+    margin-bottom: 18px;
+  }
+
+  .bloom-card h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .bloom-card p { color: var(--muted); font-size: 15px; }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    counter-reset: step;
+  }
+
+  .steps li {
+    list-style: none;
+    padding-top: 22px;
+    border-top: 2px solid var(--ink);
+    counter-increment: step;
+  }
+
+  .steps li::before {
+    content: counter(step, decimal-leading-zero);
+    display: block;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 44px;
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 14px;
+    transition: color 0.6s ease;
+  }
+
+  .steps h3 { font-size: 19px; margin-bottom: 6px; }
+  .steps p { color: var(--muted); font-size: 15px; }
+
+  .prices {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 20px;
+  }
+
+  .price-list { list-style: none; }
+
+  .price-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 17px;
+  }
+
+  .price-list li:first-child { border-top: 1px solid var(--line); }
+
+  .price-list .dots {
+    flex: 1;
+    border-bottom: 1px dotted rgba(31,42,34,0.3);
+    transform: translateY(-5px);
+  }
+
+  .price-list b { font-weight: 700; white-space: nowrap; }
+
+  .price-list small {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .price-aside {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: var(--radius);
+    padding: 34px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .price-aside p {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 30px;
+    line-height: 1.15;
+  }
+
+  .price-aside .btn { align-self: flex-start; }
+
+  footer {
+    padding: 40px 0 48px;
+    border-top: 1px solid var(--line);
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  footer .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  footer .brand { font-size: 24px; color: var(--ink); }
+  footer .brand svg { width: 24px; height: 24px; }
+
+  @media (max-width: 900px) {
+    .builder, .prices { grid-template-columns: 1fr; }
+    .stage { min-height: 460px; order: -1; }
+    .season-grid, .steps { grid-template-columns: 1fr; }
+    .block-head { flex-direction: column; align-items: start; }
+  }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .panel { padding: 22px; }
+    .stage { min-height: 380px; }
+    .tag { width: 150px; font-size: 20px; left: 5%; bottom: 5%; }
+    .total { flex-direction: column; align-items: stretch; }
+    .btn { text-align: center; }
+    section.block { padding: 64px 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav>
+    <a class="brand" href="#">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <path d="M20 36 C20 26 20 20 20 14" stroke="var(--leaf)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <path d="M20 24 C12 24 8 18 8 12 C14 12 20 16 20 24 Z" fill="var(--leaf)"/>
+        <path d="M20 20 C28 20 32 14 32 8 C26 8 20 12 20 20 Z" fill="var(--accent)" style="transition:fill .6s"/>
+      </svg>
+      Lístek <small>květinový ateliér</small>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#sestavit">Sestavit kytici</a></li>
+      <li><a href="#sezona">Sezóna</a></li>
+      <li><a href="#jak">Jak to funguje</a></li>
+      <li><a href="#cenik">Ceník</a></li>
+    </ul>
+  </nav>
+</div>
+
+<header class="hero" id="sestavit">
+  <div class="wrap">
+    <div class="hero-head">
+      <span class="eyebrow">Kytice na míru</span>
+      <h1>Kytice <em id="headOcc">na narozeniny</em></h1>
+      <p>Vyberte, co chcete vyjádřit, a kytice se vám složí přímo tady. Barvy, velikost i vzkaz na kartičce.</p>
+    </div>
+
+    <div class="builder">
+      <div class="panel">
+        <div class="step">
+          <div class="step-label"><span>1.</span> Příležitost</div>
+          <div class="chips" id="occasions" role="group" aria-label="Příležitost"></div>
+          <p class="say" id="say" aria-live="polite"></p>
+        </div>
+
+        <div class="step">
+          <div class="step-label"><span>2.</span> Velikost</div>
+          <div class="chips" id="sizes" role="group" aria-label="Velikost"></div>
+        </div>
+
+        <div class="step">
+          <div class="step-label"><span>3.</span> Balení</div>
+          <div class="chips" id="wraps" role="group" aria-label="Balení"></div>
+        </div>
+
+        <div class="step">
+          <div class="step-label"><span>4.</span> Vzkaz na kartičku</div>
+          <textarea id="msg" maxlength="90" placeholder="Všechno nejlepší! …"></textarea>
+          <span class="count" id="count">0 / 90</span>
+        </div>
+
+        <div class="total">
+          <div class="total-price"><small>Cena kytice</small><span id="price">790 Kč</span></div>
+          <button class="btn" id="order" type="button">Objednat kytici</button>
+        </div>
+        <p class="note" id="note" aria-live="polite"></p>
+      </div>
+
+      <div class="stage">
+        <span class="stage-size" id="stageSize">Střední · 11 květů</span>
+        <button class="shuffle" id="shuffle" type="button">↻ Zamíchat</button>
+        <svg id="bouquet" viewBox="0 0 400 480" role="img" aria-label="Náhled kytice"></svg>
+        <div class="tag" id="tag" hidden></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="block season" id="sezona">
+  <div class="wrap">
+    <div class="block-head">
+      <h2 id="seasonTitle">Teď <em>kvete</em></h2>
+      <p>Pracujeme s tím, co zrovna roste. Sezónní květiny vydrží déle a voní víc.</p>
+    </div>
+    <div class="season-grid" id="seasonGrid"></div>
+  </div>
+</section>
+
+<section class="block" id="jak">
+  <div class="wrap">
+    <div class="block-head">
+      <h2>Jak to <em>funguje</em></h2>
+      <p>Žádné kytice z lednice. Každou vážeme až v den, kdy si ji odnesete.</p>
+    </div>
+    <ol class="steps">
+      <li>
+        <h3>Sestavíte si ji</h3>
+        <p>Vyberete příležitost, velikost a balení. Vzkaz napíšeme ručně na kartičku.</p>
+      </li>
+      <li>
+        <h3>Ráno ji svážeme</h3>
+        <p>Květiny bereme čerstvé a kytici dáváme dohromady teprve v den vyzvednutí.</p>
+      </li>
+      <li>
+        <h3>Předáte radost</h3>
+        <p>Vyzvednete si ji v ateliéru, nebo vám ji doručíme až ke dveřím.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="block" id="cenik" style="padding-top:0">
+  <div class="wrap">
+    <div class="block-head">
+      <h2>Ceník</h2>
+      <p>Cena zahrnuje květiny, zeleň, vázání a ručně psanou kartičku.</p>
+    </div>
+    <div class="prices">
+      <ul class="price-list" id="priceList"></ul>
+      <div class="price-aside">
+        <p>Nevíte, co vybrat? Zvolte „Jen tak“. To je ten nejlepší důvod.</p>
+        <a class="btn" href="#sestavit">Sestavit kytici</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <path d="M20 36 C20 26 20 20 20 14" stroke="var(--leaf)" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <path d="M20 24 C12 24 8 18 8 12 C14 12 20 16 20 24 Z" fill="var(--leaf)"/>
+        <path d="M20 20 C28 20 32 14 32 8 C26 8 20 12 20 20 Z" fill="var(--accent)"/>
+      </svg>
+      Lístek
+    </a>
+    <span>Květinový ateliér · © 2026</span>
+  </div>
+</footer>
+
+<script>
+  const OCC = {
+    narozeniny: { head: 'na narozeniny', label: 'Narozeniny', say: 'Radost, barvy a trochu hluku.', colors: ['#f26b5b', '#ffc94a', '#f59ab5', '#ff9152'], types: ['daisy', 'rose', 'tulip', 'peony'], center: '#6b3f1d', tint: '#fff3ea', accent: '#e0513f', paper: '#ffe1d6' },
+    laska: { head: 'z lásky', label: 'Láska', say: 'Nic nevysvětlovat. Jen rudá a něžná.', colors: ['#b3122e', '#d63a52', '#f4b7c1', '#8e0d24'], types: ['rose', 'rose', 'peony', 'rose'], center: '#5a0a18', tint: '#fbeef0', accent: '#b3122e', paper: '#f7d9de' },
+    omluva: { head: 'na usmířenou', label: 'Omluva', say: 'Tiché barvy, které řeknou promiň.', colors: ['#b9a7e6', '#f4f1fc', '#8fb3e8', '#d9cdf5'], types: ['tulip', 'peony', 'daisy', 'tulip'], center: '#4b3d7a', tint: '#f3f0fb', accent: '#6b56b8', paper: '#e4dcf7' },
+    podekovani: { head: 'jako poděkování', label: 'Poděkování', say: 'Teplé tóny za všechno, co pro vás někdo udělal.', colors: ['#f7a072', '#ffd7a8', '#f6c453', '#fbe6d0'], types: ['peony', 'rose', 'daisy', 'peony'], center: '#7a4a14', tint: '#fff5e8', accent: '#d9782f', paper: '#fde4c8' },
+    jentak: { head: 'jen tak', label: 'Jen tak', say: 'Žádný důvod je ten nejlepší důvod.', colors: ['#ffd23f', '#4f86c6', '#ffffff', '#f28c38'], types: ['daisy', 'daisy', 'tulip', 'daisy'], center: '#e0a100', tint: '#f2f7ee', accent: '#3f7a4a', paper: '#dcebd2' },
+    soustrast: { head: 's tichou účastí', label: 'Soustrast', say: 'Klidná bílá a zeleň. S úctou.', colors: ['#ffffff', '#f3efe4', '#e8eee3', '#fbf8f1'], types: ['rose', 'peony', 'tulip', 'rose'], center: '#8a8a6a', tint: '#f1f2ee', accent: '#56675a', paper: '#e3e7de' }
+  };
+
+  const SIZES = {
+    s: { label: 'Malá', n: 7, price: 490 },
+    m: { label: 'Střední', n: 11, price: 790 },
+    l: { label: 'Velká', n: 16, price: 1190 }
+  };
+
+  const WRAPS = {
+    kraft: { label: 'Kraftový papír', price: 0 },
+    hedvabi: { label: 'Hedvábný papír', price: 60 },
+    krabice: { label: 'Klobouková krabice', price: 250 }
+  };
+
+  const state = { occ: 'narozeniny', size: 'm', wrap: 'kraft', seed: 0 };
+
+  const fmt = n => n.toLocaleString('cs-CZ').replace(/ /g, ' ') + ' Kč';
+  const plural = n => n < 5 ? 'květy' : 'květů';
+
+  /* ——— Flower drawings (unit size, centred on 0,0) ——— */
+  const EDGE = 'stroke="rgba(31,42,34,0.16)" stroke-width="0.05"';
+
+  function rose(c) {
+    return `<circle r="1" fill="${c}" ${EDGE}/>
+      <path d="M-0.72 0.1 A0.72 0.72 0 0 1 0.62 -0.36" fill="none" stroke="rgba(0,0,0,0.2)" stroke-width="0.07" stroke-linecap="round"/>
+      <path d="M0.66 0.3 A0.66 0.66 0 0 1 -0.4 0.56" fill="none" stroke="rgba(0,0,0,0.2)" stroke-width="0.07" stroke-linecap="round"/>
+      <circle cx="0.04" cy="0.02" r="0.42" fill="rgba(0,0,0,0.1)"/>
+      <path d="M-0.42 0 A0.42 0.42 0 0 1 0.3 -0.3" fill="none" stroke="rgba(0,0,0,0.22)" stroke-width="0.07" stroke-linecap="round"/>
+      <path d="M-0.14 0.06 A0.16 0.16 0 1 1 0.16 0.1" fill="none" stroke="rgba(0,0,0,0.26)" stroke-width="0.07" stroke-linecap="round"/>`;
+  }
+
+  function daisy(c, center) {
+    let petals = '';
+    for (let k = 0; k < 12; k++) {
+      petals += `<ellipse cy="-0.58" rx="0.2" ry="0.46" fill="${c}" ${EDGE} transform="rotate(${k * 30})"/>`;
+    }
+    return petals + `<circle r="0.32" fill="${center}"/>`;
+  }
+
+  function tulip(c) {
+    return `<path d="M-0.72 -0.25 C-0.78 0.62 0.78 0.62 0.72 -0.25 L0.46 -0.9 L0.22 -0.38 L0 -1 L-0.22 -0.38 L-0.46 -0.9 Z" fill="${c}" ${EDGE}/>
+      <path d="M0 -0.95 C-0.1 -0.3 -0.1 0.2 0 0.42" fill="none" stroke="rgba(0,0,0,0.14)" stroke-width="0.06"/>`;
+  }
+
+  function peony(c) {
+    return `<circle r="1" fill="${c}" ${EDGE}/>
+      <circle r="0.74" fill="rgba(255,255,255,0.2)"/>
+      <circle r="0.74" fill="none" stroke="rgba(0,0,0,0.1)" stroke-width="0.05"/>
+      <circle r="0.46" fill="rgba(255,255,255,0.22)"/>
+      <circle r="0.46" fill="none" stroke="rgba(0,0,0,0.1)" stroke-width="0.05"/>
+      <circle r="0.2" fill="rgba(0,0,0,0.12)"/>`;
+  }
+
+  function flower(type, c, center) {
+    if (type === 'daisy') return daisy(c, center);
+    if (type === 'tulip') return tulip(c);
+    if (type === 'peony') return peony(c);
+    return rose(c);
+  }
+
+  /* Deterministic pseudo random, so "Zamíchat" gives a stable new layout */
+  function rng(seed) {
+    let s = seed * 9301 + 49297;
+    return () => {
+      s = (s * 9301 + 49297) % 233280;
+      return s / 233280;
+    };
+  }
+
+  function sprig(x, y, angle, len) {
+    let leaves = '';
+    for (let i = 1; i <= 5; i++) {
+      const t = i / 5.6;
+      const side = i % 2 ? 1 : -1;
+      leaves += `<circle cx="${side * 8}" cy="${-t * len}" r="${10 - i * 0.9}" fill="#8fae98" stroke="rgba(31,42,34,0.12)" stroke-width="0.8"/>`;
+    }
+    return `<g transform="translate(${x} ${y}) rotate(${angle})">
+      <path d="M0 0 L0 ${-len}" stroke="#5f7f68" stroke-width="2.2" stroke-linecap="round"/>${leaves}</g>`;
+  }
+
+  function drawBouquet() {
+    const occ = OCC[state.occ];
+    const n = SIZES[state.size].n;
+    const rand = rng(state.seed + 7);
+    const box = state.wrap === 'krabice';
+    const cx = 200, cy = box ? 240 : 182;
+    const R = (38 + n * 4.6) * (box ? 0.85 : 1);
+    const tie = { x: 200, y: box ? 300 : 318 };
+
+    const pts = [];
+    const rot = state.seed * 1.3;
+    for (let i = 0; i < n; i++) {
+      const r = Math.sqrt((i + 0.5) / n);
+      const a = i * 2.39996 + rot;
+      pts.push({
+        x: cx + Math.cos(a) * r * R,
+        y: cy + Math.sin(a) * r * R * (box ? 0.55 : 0.78),
+        s: 40 + rand() * 6 - n * 0.9,
+        type: occ.types[(i + state.seed) % occ.types.length],
+        color: occ.colors[Math.floor(rand() * occ.colors.length)]
+      });
+    }
+    pts.sort((a, b) => a.y - b.y);
+
+    let greens = '';
+    const sprigs = 4 + Math.round(n / 3);
+    for (let i = 0; i < sprigs; i++) {
+      const a = Math.PI + (i + 0.5) / sprigs * Math.PI;
+      const x = cx + Math.cos(a) * R * 0.6;
+      const y = cy + Math.sin(a) * R * 0.5 + 40;
+      const ang = (i + 0.5) / sprigs * 150 - 75;
+      greens += sprig(x, y, ang, R * 0.65 + rand() * 20);
+    }
+
+    let stems = '';
+    if (!box) {
+      for (const p of pts) {
+        const endX = tie.x + (p.x - tie.x) * 0.22;
+        stems += `<path d="M${p.x.toFixed(1)} ${p.y.toFixed(1)} Q${((p.x + tie.x) / 2).toFixed(1)} ${(tie.y - 30).toFixed(1)} ${tie.x} ${tie.y} L${endX.toFixed(1)} 462" stroke="#4f7058" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+      }
+    }
+
+    let flowers = '';
+    for (const p of pts) {
+      flowers += `<g class="flower" transform="translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) scale(${p.s.toFixed(1)})">${flower(p.type, p.color, occ.center)}</g>`;
+    }
+
+    const ribbon = `<path d="M147 322 Q200 342 253 322" stroke="${occ.accent}" stroke-width="5" fill="none" stroke-linecap="round"/>
+      <path d="M151 331 Q200 350 249 331" stroke="${occ.accent}" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+      <circle cx="200" cy="334" r="5" fill="${occ.accent}"/>
+      <path d="M200 336 Q192 360 184 372 M200 336 Q210 358 218 368" stroke="${occ.accent}" stroke-width="2.5" fill="none" stroke-linecap="round"/>`;
+
+    let wrapBack = '', wrapFront = '';
+    if (state.wrap === 'kraft') {
+      wrapBack = `<path d="M92 214 L200 440 L308 214 Q200 250 92 214 Z" fill="#b98e62"/>`;
+      wrapFront = `<path d="M120 262 L200 440 L280 262 Q248 300 200 292 Q152 300 120 262 Z" fill="#c9a27a"/>
+        <path d="M120 262 L200 440" stroke="rgba(0,0,0,0.12)" stroke-width="1.5"/>
+        ${ribbon}`;
+    } else if (state.wrap === 'hedvabi') {
+      wrapBack = `<path d="M84 206 L200 440 L316 206 Q284 232 256 214 Q228 240 200 218 Q172 240 144 214 Q116 232 84 206 Z" fill="${occ.paper}" opacity="0.95"/>`;
+      wrapFront = `<path d="M112 258 L200 440 L288 258 Q262 288 238 272 Q220 296 200 282 Q180 296 162 272 Q138 288 112 258 Z" fill="${occ.paper}" stroke="rgba(31,42,34,0.1)" stroke-width="1"/>
+        <path d="M150 300 L200 440 M250 300 L200 440" stroke="rgba(31,42,34,0.08)" stroke-width="1.2"/>
+        ${ribbon}`;
+    } else {
+      wrapBack = `<ellipse cx="200" cy="280" rx="108" ry="24" fill="#2c3a30"/>`;
+      wrapFront = `<path d="M92 280 L92 418 Q200 450 308 418 L308 280 Q200 314 92 280 Z" fill="${occ.accent}"/>
+        <path d="M92 280 Q200 314 308 280 L308 304 Q200 338 92 304 Z" fill="rgba(0,0,0,0.12)"/>
+        <path d="M92 280 Q200 314 308 280" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
+        <text x="200" y="386" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="34" fill="rgba(255,255,255,0.9)">Lístek</text>`;
+    }
+
+    const shadow = `<ellipse cx="200" cy="${box ? 438 : 466}" rx="${box ? 130 : 60}" ry="10" fill="rgba(31,42,34,0.08)"/>`;
+    document.getElementById('bouquet').innerHTML = shadow + wrapBack + greens + stems + flowers + wrapFront;
+  }
+
+  /* ——— Controls ——— */
+  function chipGroup(el, data, key, withPrice) {
+    el.innerHTML = Object.entries(data).map(([id, d]) =>
+      `<button class="chip" type="button" data-id="${id}" aria-pressed="${state[key] === id}">${d.label}${withPrice ? `<span class="price">${d.price ? (key === 'wrap' ? '+' : '') + fmt(d.price) : 'v ceně'}</span>` : ''}</button>`
+    ).join('');
+    el.addEventListener('click', e => {
+      const b = e.target.closest('.chip');
+      if (!b) return;
+      state[key] = b.dataset.id;
+      el.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', c === b));
+      update();
+    });
+  }
+
+  chipGroup(document.getElementById('occasions'), OCC, 'occ', false);
+  chipGroup(document.getElementById('sizes'), SIZES, 'size', true);
+  chipGroup(document.getElementById('wraps'), WRAPS, 'wrap', true);
+
+  const msg = document.getElementById('msg');
+  const tag = document.getElementById('tag');
+  msg.addEventListener('input', () => {
+    document.getElementById('count').textContent = `${msg.value.length} / 90`;
+    tag.textContent = msg.value;
+    tag.hidden = !msg.value.trim();
+  });
+
+  document.getElementById('shuffle').addEventListener('click', () => {
+    state.seed++;
+    drawBouquet();
+  });
+
+  document.getElementById('order').addEventListener('click', () => {
+    document.getElementById('note').textContent =
+      `Tohle je ukázkový web, objednávky nepřijímáme. Vaše kytice by stála ${fmt(total())}.`;
+  });
+
+  function total() {
+    return SIZES[state.size].price + WRAPS[state.wrap].price;
+  }
+
+  function update() {
+    const occ = OCC[state.occ];
+    const root = document.documentElement.style;
+    root.setProperty('--tint', occ.tint);
+    root.setProperty('--accent', occ.accent);
+    document.getElementById('say').textContent = occ.say;
+    document.getElementById('headOcc').textContent = occ.head;
+    document.getElementById('price').textContent = fmt(total());
+    const n = SIZES[state.size].n;
+    document.getElementById('stageSize').textContent = `${SIZES[state.size].label} · ${n} ${plural(n)}`;
+    document.getElementById('note').textContent = '';
+    drawBouquet();
+  }
+
+  /* ——— Season: what blooms this month ——— */
+  const SEASON = [
+    { months: [0, 1], name: 'v zimě', items: [['Amarylis', 'Velké květy, které vydrží v teple bytu i dva týdny.', 'tulip', '#c8203a'], ['Hyacint', 'Voní přes celou místnost. Ideální do malé vázy.', 'daisy', '#7f7fd6'], ['Eukalyptus', 'Stříbrná zeleň, která kytici dodá klid.', 'peony', '#9fb8a6']] },
+    { months: [2, 3], name: 'na jaře', items: [['Tulipány', 'Ve váze ještě rostou a otáčejí se za světlem.', 'tulip', '#f26b5b'], ['Narcisy', 'První žlutá sezóny. Dávejte je do vody zvlášť.', 'daisy', '#ffd23f'], ['Pryskyřníky', 'Vrstvené okvětí jako z papíru.', 'peony', '#f59ab5']] },
+    { months: [4, 5], name: 'v květnu a červnu', items: [['Pivoňky', 'Otevírají se postupně, každý den jsou větší.', 'peony', '#f4b7c1'], ['Šeřík', 'Krátká sezóna a nezaměnitelná vůně.', 'daisy', '#b9a7e6'], ['Růže', 'Venkovní růže mají silnější vůni než ty skleníkové.', 'rose', '#d63a52']] },
+    { months: [6, 7], name: 'v létě', items: [['Slunečnice', 'Léto v jednom květu. Stačí jich pár.', 'daisy', '#ffc94a'], ['Hortenzie', 'Velké hlavy, které rády pijí. Hodně vody.', 'peony', '#8fb3e8'], ['Lilie', 'Výrazná vůně, prašníky odstraňujeme za vás.', 'tulip', '#fbe6d0']] },
+    { months: [8, 9], name: 'na podzim', items: [['Jiřiny', 'Královny podzimu v barvách od krémové po vínovou.', 'peony', '#f7a072'], ['Astry', 'Drobné hvězdičky, které kytici rozsvítí.', 'daisy', '#9b7fd6'], ['Chryzantémy', 'Vydrží ve váze klidně tři týdny.', 'daisy', '#f6c453']] },
+    { months: [10, 11], name: 'v zimě', items: [['Amarylis', 'Sváteční červená pro dlouhé večery.', 'tulip', '#b3122e'], ['Cesmína', 'Lesklé listy a červené bobule.', 'rose', '#c8203a'], ['Eukalyptus', 'Voní čerstvě a skvěle usychá.', 'peony', '#9fb8a6']] }
+  ];
+
+  const MONTHS = ['V lednu', 'V únoru', 'V březnu', 'V dubnu', 'V květnu', 'V červnu', 'V červenci', 'V srpnu', 'V září', 'V říjnu', 'V listopadu', 'V prosinci'];
+
+  function renderSeason() {
+    const m = new Date().getMonth();
+    const s = SEASON.find(x => x.months.includes(m));
+    document.getElementById('seasonTitle').innerHTML = `${MONTHS[m]} <em>kvete</em>`;
+    document.getElementById('seasonGrid').innerHTML = s.items.map(([name, text, type, color]) =>
+      `<article class="bloom-card">
+        <svg viewBox="-1.2 -1.2 2.4 2.4" aria-hidden="true">${flower(type, color, '#6b3f1d')}</svg>
+        <h3>${name}</h3>
+        <p>${text}</p>
+      </article>`
+    ).join('');
+  }
+
+  function renderPrices() {
+    const rows = [
+      ...Object.values(SIZES).map(s => [`Kytice ${s.label.toLowerCase()}`, `${s.n} ${plural(s.n)} a sezónní zeleň`, s.price]),
+      ['Hedvábný papír', 'Barva podle příležitosti', WRAPS.hedvabi.price],
+      ['Klobouková krabice', 'Květiny zapíchnuté v aranžovací hmotě', WRAPS.krabice.price]
+    ];
+    document.getElementById('priceList').innerHTML = rows.map(([t, d, p], i) =>
+      `<li><span>${t}<small>${d}</small></span><span class="dots"></span><b>${i > 2 ? '+ ' : ''}${fmt(p)}</b></li>`
+    ).join('');
+  }
+
+  renderSeason();
+  renderPrices();
+  update();
+</script>
+</body>
+</html>

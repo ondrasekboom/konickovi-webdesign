@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monkey Coffee House · Specialty Coffee Sanctuary · Praha</title>
+  <meta name="description" content="Monkey Coffee House – specialty kavárna v Praze na Harfě (Pod Harfou 23, Praha 9) a na Opletalově (Opletalova 8, Praha 1). Káva, čaj, víno, čerstvé croissanty a cookies. Otevřeno každý den do 18:00.">
+  <link rel="icon" type="image/jpeg" href="images/logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="header" id="top">
+    <div class="container header__inner">
+      <a href="#top" class="logo" aria-label="Monkey Coffee House – úvod">
+        <span class="logo__mark" aria-hidden="true">
+          <img src="images/logo.jpg" alt="" onerror="this.remove()">
+          <span>M</span>
+        </span>
+        <span class="logo__text">Monkey<small>Coffee House</small></span>
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Hlavní navigace">
+        <a href="#o-nas">O nás</a>
+        <a href="#menu">Menu</a>
+        <a href="#pekarna">Pekárna</a>
+        <a href="#galerie">Galerie</a>
+        <a href="#kariera">Kariéra</a>
+        <a href="#kontakt" class="btn btn--small">Kde nás najdete</a>
+      </nav>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Otevřít menu" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <p class="status" id="openStatus"><span class="status__dot"></span><span class="status__text">Otevírací doba</span></p>
+          <h1 lang="en">Specialty coffee<br><em>house</em> in Prague.</h1>
+          <p class="lead">Poctivá výběrová káva, čaj, víno a každý den čerstvé pečivo z naší vlastní pekárny. Zastavte se na chvíli klidu – <strong>We are #MonkeyCoffee</strong>.</p>
+          <div class="hero__actions">
+            <a href="#menu" class="btn">Prohlédnout menu</a>
+            <a href="#kontakt" class="btn btn--ghost">Naše pobočky</a>
+          </div>
+          <ul class="hero__facts">
+            <li><strong>2 pobočky</strong><span>Harfa · Opletalova</span></li>
+            <li><strong>8:00–18:00</strong><span>Po–Pá na obou</span></li>
+            <li><strong>So–Ne do 18:00</strong><span>Opletalova od 9 · Harfa od 10</span></li>
+          </ul>
+        </div>
+
+        <div class="hero__visual" aria-hidden="true">
+          <div class="cup-card">
+            <img class="photo" src="images/hero.jpg" alt="" onerror="this.remove()">
+            <svg viewBox="0 0 320 320" class="cup">
+              <circle cx="160" cy="160" r="150" fill="#2a1f1a"/>
+              <circle cx="160" cy="160" r="118" fill="#f4ede3"/>
+              <circle cx="160" cy="160" r="100" fill="#8a5a3b"/>
+              <circle cx="160" cy="160" r="92" fill="#a0694a"/>
+              <!-- latte art tulip -->
+              <path d="M160 222c-26 0-44-12-44-30 0-10 8-16 18-16-10-6-14-14-14-22 0-12 12-20 26-20-6-6-8-12-8-18 0-14 10-24 22-24s22 10 22 24c0 6-2 12-8 18 14 0 26 8 26 20 0 8-4 16-14 22 10 0 18 6 18 16 0 18-18 30-44 30z" fill="#f4ede3" opacity=".95"/>
+              <path d="M160 96v130" stroke="#a0694a" stroke-width="4" stroke-linecap="round"/>
+              <path d="M130 184c10 6 50 6 60 0M136 148c8 5 40 5 48 0M146 116c5 3 23 3 28 0" stroke="#a0694a" stroke-width="3" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="badge badge--pistachio">Čerstvé croissanty<br><b>každé ráno</b></div>
+          <div class="badge badge--dark">☕ Dirty Coffee<br><b>must try</b></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <!-- Obě skupiny musí být stejné – druhá navazuje na první, takže pás jede dokola bez mezery -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__group">
+        <span>Coffee</span><i>✦</i><span>Tea</span><i>✦</i><span>Wine</span><i>✦</i><span>Cookies</span><i>✦</i><span>Croissants</span><i>✦</i>
+      </div>
+      <div class="marquee__group">
+        <span>Coffee</span><i>✦</i><span>Tea</span><i>✦</i><span>Wine</span><i>✦</i><span>Cookies</span><i>✦</i><span>Croissants</span><i>✦</i>
+      </div>
+    </div>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="section" id="o-nas">
+      <div class="container about">
+        <div class="section__head">
+          <p class="eyebrow">O nás</p>
+          <h2>Malá kavárna s&nbsp;velkou láskou ke kávě.</h2>
+        </div>
+        <div class="about__text">
+          <p>Monkey Coffee House je místo, kam se chodí na <strong>pořádné espresso</strong>, flat white s dokonalou latte art, nebo na sklenku vína po práci. Pečivo si pečeme sami – od pistáciových a mandlových croissantů po cookies.</p>
+          <p>Ať už si kávu dáte na terase, vezmete s sebou v kelímku, nebo tu strávíte odpoledne s notebookem, chceme, abyste se u nás cítili jako doma. Psí kamarádi jsou vítáni. 🐶</p>
+        </div>
+
+        <ul class="features">
+          <li class="feature">
+            <span class="feature__icon">
+              <svg viewBox="0 0 24 24"><path d="M4 8h13v5a6 6 0 0 1-6 6h-1a6 6 0 0 1-6-6V8zM17 10h1.5a2.5 2.5 0 0 1 0 5H17M8 2c0 1.5 1 1.5 1 3M12 2c0 1.5 1 1.5 1 3"/></svg>
+            </span>
+            <h3>Výběrová káva</h3>
+            <p>Pečlivě vybraná zrna, espresso i filtr. Každý šálek připravujeme ručně.</p>
+          </li>
+          <li class="feature">
+            <span class="feature__icon">
+              <svg viewBox="0 0 24 24"><path d="M3 15c0-5 4-9 9-9s9 4 9 9M3 15l3 3h12l3-3M8 9l1 6M16 9l-1 6M12 6v9"/></svg>
+            </span>
+            <h3>Vlastní pekárna</h3>
+            <p>Croissanty, kynuté šneky a cookies pečeme každý den přímo u nás.</p>
+          </li>
+          <li class="feature">
+            <span class="feature__icon">
+              <svg viewBox="0 0 24 24"><path d="M8 3h8l-1 7a3 3 0 0 1-6 0L8 3zM12 13v7M8 21h8"/></svg>
+            </span>
+            <h3>Čaj &amp; víno</h3>
+            <p>Když zrovna nemáte chuť na kávu – kvalitní čaje a výběr vín.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ MENU ============ -->
+    <section class="section section--dark" id="menu">
+      <div class="container">
+        <div class="section__head section__head--center">
+          <p class="eyebrow">Menu</p>
+          <h2>Co u nás ochutnáte</h2>
+          <p class="muted">Aktuální nabídka podle naší tabule u baru a vinného lístku. Všechny ceny jsou v Kč.</p>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="Kategorie menu">
+          <button class="tab is-active" role="tab" aria-selected="true" aria-controls="tab-teple" id="t-teple">Teplé nápoje</button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="tab-studene" id="t-studene">Studené</button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="tab-special" id="t-special">Speciality</button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="tab-deti" id="t-deti">Pro děti</button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="tab-alkohol" id="t-alkohol">Alkohol</button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="tab-vino" id="t-vino">Vinný lístek</button>
+          <button class="tab" role="tab" aria-selected="false" aria-controls="tab-pecivo" id="t-pecivo">Pečivo</button>
+        </div>
+
+        <!-- Ceny podle tabule v kavárně. Úprava ceny: přepište text v <span class="price"> -->
+        <div class="menu-panel is-active" id="tab-teple" role="tabpanel" aria-labelledby="t-teple">
+          <ul class="menu-list">
+            <li><div><h4>Double espresso</h4><p>Dvojité espresso z výběrových zrn</p></div><span class="price">80 Kč</span></li>
+            <li><div><h4>Batch brew</h4><p>Filtrovaná káva připravovaná ve várce</p></div><span class="price">80 / 100 Kč</span></li>
+            <li><div><h4>Cortado</h4><p>Espresso s trochou napěněného mléka</p></div><span class="price">85 Kč</span></li>
+            <li><div><h4>Cappuccino</h4><p>Espresso a sametové mléko s latte art</p></div><span class="price">90 / 115 Kč</span></li>
+            <li><div><h4>Latte</h4><p>Jemná káva s větším množstvím mléka</p></div><span class="price">95 Kč</span></li>
+            <li><div><h4>Čaj</h4><p>Zeptejte se na aktuální výběr</p></div><span class="price">95 Kč</span></li>
+            <li><div><h4>Horká čokoláda</h4><p>Hustá horká čokoláda s mlékem</p></div><span class="price">100 Kč</span></li>
+            <li><div><h4>Flat white</h4><p>Dvojité espresso s tenkou vrstvou mléka</p></div><span class="price">105 Kč</span></li>
+            <li><div><h4>Chai latte / Hojicha latte</h4><p>Kořeněný chai nebo pražený japonský čaj hojicha s mlékem</p></div><span class="price">115 Kč</span></li>
+            <li><div><h4>Matcha latte</h4><p>Japonská matcha s mlékem</p></div><span class="price">125 Kč</span></li>
+            <li><div><h4>Mocha</h4><p>Espresso, čokoláda a mléko</p></div><span class="price">130 Kč</span></li>
+            <li><div><h4>RAF</h4><p>Káva se smetanou – levandule, zázvor nebo vanilka</p></div><span class="price">130 Kč</span></li>
+            <li><div><h4>Latte Baileys</h4><p>Latte s likérem Baileys</p></div><span class="price">145 Kč</span></li>
+            <li><div><h4>Hand brew V60</h4><p>Ručně překapávaná filtrovaná káva</p></div><span class="price">195 Kč</span></li>
+            <li><div><h4>Rostlinné mléko</h4><p>Příplatek k jakémukoli nápoji</p></div><span class="price">+20 Kč</span></li>
+          </ul>
+        </div>
+
+        <div class="menu-panel" id="tab-studene" role="tabpanel" aria-labelledby="t-studene" hidden>
+          <ul class="menu-list">
+            <li><div><h4>Cold bumble juice</h4><p>Espresso s pomerančovým džusem a ledem</p></div><span class="price">98 Kč</span></li>
+            <li><div><h4>Cold brew</h4><p>Káva louhovaná za studena</p></div><span class="price">105 Kč</span></li>
+            <li><div><h4>Coco water</h4><p>Kokosová voda s ledem</p></div><span class="price">120 Kč</span></li>
+            <li><div><h4>Iced latte</h4><p>Espresso, studené mléko a led</p></div><span class="price">125 Kč</span></li>
+            <li><div><h4>Espresso tonic</h4><p>Espresso s tonikem a ledem</p></div><span class="price">135 Kč</span></li>
+            <li><div><h4>Iced cappuccino</h4><p>Ledové cappuccino</p></div><span class="price">135 Kč</span></li>
+            <li><div><h4>Thai coffee</h4><p>Ledová káva po thajsku</p></div><span class="price">140 Kč</span></li>
+            <li><div><h4>Iced matcha</h4><p>Ledová matcha s mlékem</p></div><span class="price">145 Kč</span></li>
+          </ul>
+        </div>
+
+        <div class="menu-panel" id="tab-special" role="tabpanel" aria-labelledby="t-special" hidden>
+          <ul class="menu-list">
+            <li class="is-highlight"><div><h4>Dirty coffee <em class="tag">Hit</em></h4><p>Studené mléko a horké espresso navrch</p></div><span class="price">100 Kč</span></li>
+            <li><div><h4>Cappuccino</h4><p>Speciální verze</p></div><span class="price">105 Kč</span></li>
+            <li><div><h4>Flat white</h4><p>Speciální verze</p></div><span class="price">115 Kč</span></li>
+            <li><div><h4>Iced latte</h4><p>Speciální verze</p></div><span class="price">120 Kč</span></li>
+            <li><div><h4>Strawberry matcha latte</h4><p>Matcha latte s jahodami</p></div><span class="price">125 Kč</span></li>
+            <li><div><h4>Mojito</h4><p>Osvěžující mojito s limetkou a mátou</p></div><span class="price">150 / 100 Kč</span></li>
+            <li><div><h4>Svařené víno</h4><p>Horké víno s kořením</p></div><span class="price">95 Kč</span></li>
+          </ul>
+        </div>
+
+        <div class="menu-panel" id="tab-deti" role="tabpanel" aria-labelledby="t-deti" hidden>
+          <ul class="menu-list">
+            <li><div><h4>Babyccino</h4><p>Našlehané mléko pro nejmenší</p></div><span class="price">50 Kč</span></li>
+            <li><div><h4>Choco chino</h4><p>Mléčná pěna s čokoládou</p></div><span class="price">60 Kč</span></li>
+            <li><div><h4>Limonáda</h4><p>Osvěžující limonáda</p></div><span class="price">95 Kč</span></li>
+          </ul>
+        </div>
+
+        <div class="menu-panel" id="tab-alkohol" role="tabpanel" aria-labelledby="t-alkohol" hidden>
+          <ul class="menu-list">
+            <li><div><h4>Vodka</h4><p>Panák vodky</p></div><span class="price">90 Kč</span></li>
+            <li><div><h4>Baileys</h4><p>Irský smetanový likér</p></div><span class="price">120 Kč</span></li>
+            <li><div><h4>Gin tonic</h4><p>Gin s tonikem</p></div><span class="price">160 Kč</span></li>
+            <li><div><h4>Aperol spritz</h4><p>Aperol, prosecco a soda</p></div><span class="price">160 Kč</span></li>
+            <li><div><h4>Cuba libre</h4><p>Rum s colou a limetkou</p></div><span class="price">170 Kč</span></li>
+            <li><div><h4>Prosecco</h4><p>Italské šumivé víno</p></div><span class="price">180 Kč</span></li>
+            <li><div><h4>Mimosa</h4><p>Prosecco s pomerančovým džusem</p></div><span class="price">195 Kč</span></li>
+          </ul>
+        </div>
+
+        <div class="menu-panel" id="tab-vino" role="tabpanel" aria-labelledby="t-vino" hidden>
+          <h3 class="menu-group">Rozlévaná vína</h3>
+          <ul class="menu-list">
+            <li><div><h4>Geografico Rosso</h4><p>Červené víno · 1 dl</p></div><span class="price">90 Kč</span></li>
+            <li><div><h4>Geografico Bianco</h4><p>Bílé víno · 1 dl</p></div><span class="price">90 Kč</span></li>
+          </ul>
+
+          <h3 class="menu-group">Červená vína <small>láhev 0,75 l</small></h3>
+          <ul class="menu-list">
+            <li><div><h4>Sangiovese Puglia</h4><p>Červené suché</p></div><span class="price">373 Kč</span></li>
+            <li><div><h4>Chianti</h4><p>Červené suché</p></div><span class="price">379 Kč</span></li>
+            <li><div><h4>Primitivo Puglia</h4><p>Červené suché</p></div><span class="price">389 Kč</span></li>
+            <li><div><h4>Famiglia Grillo</h4><p>Červené suché</p></div><span class="price">392 Kč</span></li>
+            <li><div><h4>Villa Valentina Rosso Terre Siciliane</h4><p>Červené suché</p></div><span class="price">394 Kč</span></li>
+            <li><div><h4>Famiglia Grillo Selezione di Famiglia</h4><p>Červené suché</p></div><span class="price">395 Kč</span></li>
+          </ul>
+
+          <h3 class="menu-group">Bílá vína <small>láhev 0,75 l</small></h3>
+          <ul class="menu-list">
+            <li><div><h4>Ansonica Terre Siciliane</h4><p>Bílé víno</p></div><span class="price">389 Kč</span></li>
+            <li><div><h4>Arneis Fratelli Ponte</h4><p>Bílé víno</p></div><span class="price">390 Kč</span></li>
+            <li><div><h4>Riesling Sarti</h4><p>Bílé víno</p></div><span class="price">390 Kč</span></li>
+            <li><div><h4>Villa Valentina Il Classico</h4><p>Bílé víno</p></div><span class="price">400 Kč</span></li>
+            <li><div><h4>Villa Valentina Pinot Grigio</h4><p>Bílé víno</p></div><span class="price">400 Kč</span></li>
+          </ul>
+
+          <h3 class="menu-group">Prosecco <small>láhev 0,75 l</small></h3>
+          <ul class="menu-list">
+            <li><div><h4>Spumante Bianco LOVE</h4><p>Prosecco</p></div><span class="price">379 Kč</span></li>
+            <li><div><h4>Piccini Venetian Dress</h4><p>Prosecco DOC</p></div><span class="price">489 Kč</span></li>
+          </ul>
+
+          <h3 class="menu-group">Občerstvení k vínu</h3>
+          <ul class="menu-list">
+            <li><div><h4>Arašídy</h4><p>100 g</p></div><span class="price">65 Kč</span></li>
+            <li><div><h4>Lay's</h4><p>Chipsy</p></div><span class="price">75 Kč</span></li>
+            <li><div><h4>Pringles</h4><p>Chipsy</p></div><span class="price">80 Kč</span></li>
+            <li><div><h4>Pistácie</h4><p>100 g</p></div><span class="price">90 Kč</span></li>
+            <li><div><h4>Ořechy</h4><p>100 g</p></div><span class="price">100 Kč</span></li>
+          </ul>
+        </div>
+
+        <div class="menu-panel" id="tab-pecivo" role="tabpanel" aria-labelledby="t-pecivo" hidden>
+          <ul class="menu-list">
+            <li class="is-highlight"><div><h4>Pistáciový croissant <em class="tag">Hit</em></h4><p>Máslové těsto, pistáciový krém a drcené pistácie</p></div><span class="price"></span></li>
+            <li><div><h4>Mandlový croissant</h4><p>S mandlovým krémem a plátky mandlí</p></div><span class="price"></span></li>
+            <li><div><h4>Máslový croissant</h4><p>Klasika, křupavá a vrstvená</p></div><span class="price"></span></li>
+            <li><div><h4>Koláček s vanilkovým krémem</h4><p>Listové těsto, krém a plátky mandlí</p></div><span class="price"></span></li>
+            <li><div><h4>Malinový koláček</h4><p>Listové těsto s malinami</p></div><span class="price"></span></li>
+            <li><div><h4>Pain au chocolat</h4><p>Máslové těsto s tmavou čokoládou</p></div><span class="price"></span></li>
+          </ul>
+          <p class="menu-note">Pečivo se mění podle toho, co ráno upečeme – aktuální výběr a ceny najdete ve vitríně.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BAKERY ============ -->
+    <section class="section" id="pekarna">
+      <div class="container bakery">
+        <div class="bakery__visual">
+          <div class="tile tile--a"><img src="images/pekarna-1.jpg" alt="Plech s pistáciovými croissanty a koláčky s vanilkovým krémem" onerror="this.remove()"><span>🥐</span></div>
+          <div class="tile tile--b"><img src="images/pekarna-2.jpg" alt="Mandlové a pistáciové croissanty, malinové koláčky a pain au chocolat z naší pekárny" onerror="this.remove()"><span>🍪</span></div>
+        </div>
+        <div>
+          <p class="eyebrow">Pekárna</p>
+          <h2>Pečeme sami.<br>Každé ráno.</h2>
+          <p>V naší vlastní pekárně vzniká máslové těsto, ze kterého každý den připravujeme croissanty s pistáciovým, mandlovým i vanilkovým krémem. Nejlépe chutnají ještě teplé – a s flat white.</p>
+          <ul class="checklist">
+            <li>Máslové listové těsto vlastní výroby</li>
+            <li>Pistáciové, mandlové a krémové náplně</li>
+            <li>Cookies a sezónní speciality</li>
+          </ul>
+          <p class="note">Tip: nejširší výběr máme dopoledne. Odpoledne může být vyprodáno.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GALLERY ============ -->
+    <section class="section section--cream" id="galerie">
+      <div class="container">
+        <div class="section__head section__head--row">
+          <div>
+            <p class="eyebrow">Galerie</p>
+            <h2>Z našeho Instagramu</h2>
+          </div>
+          <a class="btn btn--ghost" href="https://www.instagram.com/monkey.coffee.house/" target="_blank" rel="noopener">@monkey.coffee.house ↗</a>
+        </div>
+
+        <!-- Fotky vložte do složky images/ jako galerie-1.jpg … galerie-8.jpg -->
+        <div class="gallery">
+          <a class="g g--tall" href="https://www.instagram.com/monkey.coffee.house/" target="_blank" rel="noopener"><img src="images/galerie-1.jpg" alt="Kelímek s kávou – nejlepší káva na Harfě" onerror="this.remove()"><span class="g__ph">☕<small>Káva s sebou</small></span></a>
+          <a class="g" href="https://www.instagram.com/monkey.coffee.house/" target="_blank" rel="noopener"><img src="images/galerie-2.jpg" alt="Latte s latte art" onerror="this.remove()"><span class="g__ph">☕<small>Latte art</small></span></a>
+          <a class="g" href="https://www.instagram.com/monkey.coffee.house/" target="_blank" rel="noopener"><img src="images/galerie-3.jpg" alt="Matcha latte v bílém šálku" onerror="this.remove()"><span class="g__ph">🍵<small>Matcha latte</small></span></a>
+          <a class="g g--wide" href="https://www.instagram.com/monkey.coffee.house/" target="_blank" rel="noopener"><img src="images/galerie-4.jpg" alt="Interiér kavárny Monkey Coffee House" onerror="this.remove()"><span class="g__ph">🌿<small>Interiér</small></span></a>
+          <a class="g" href="https://www.instagram.com/monkey.coffee.house/" target="_blank" rel="noopener"><img src="images/galerie-5.jpg" alt="Plech s croissanty, pain au chocolat, pistáciovými croissanty a koláčky s vanilkovým krémem" onerror="this.remove()"><span class="g__ph">🥐<small>Čerstvé pečivo</small></span></a>
+          <a class="g" href="https://www.instagram.com/monkey.coffee.house/" target="_blank" rel="noopener"><img src="images/galerie-6.jpg" alt="Cappuccino v černém šálku na terase" onerror="this.remove()"><span class="g__ph">☕<small>Cappuccino</small></span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CAREERS ============ -->
+    <section class="section" id="kariera">
+      <div class="container">
+        <div class="section__head section__head--center">
+          <p class="eyebrow">Kariéra</p>
+          <h2>Přidejte se k týmu #MonkeyCoffee</h2>
+          <p class="muted">Rosteme a hledáme nové kolegy, kteří mají rádi dobrou kávu, pečení a lidi.</p>
+        </div>
+        <div class="jobs">
+          <article class="job">
+            <span class="job__icon">🥐</span>
+            <div>
+              <h3>Pekař / Pekařka</h3>
+              <p>Hledáme šikovné ruce do naší pekárny – croissanty, laminované těsto, ranní směny.</p>
+            </div>
+            <a class="btn btn--small" href="https://www.instagram.com/monkey.coffee.house/" target="_blank" rel="noopener">Napište nám</a>
+          </article>
+          <article class="job">
+            <span class="job__icon">☕</span>
+            <div>
+              <h3>Barista / Baristka</h3>
+              <p>Barista wanted! Pokud vás baví espresso, latte art a kontakt se zákazníky, ozvěte se.</p>
+            </div>
+            <a class="btn btn--small" href="https://www.instagram.com/monkey.coffee.house/" target="_blank" rel="noopener">Napište nám</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section section--dark" id="kontakt">
+      <div class="container">
+        <div class="contact__top">
+          <div>
+            <p class="eyebrow">Pobočky &amp; kontakt</p>
+            <h2>Přijďte na kafe.</h2>
+            <p class="muted">Najdete nás na dvou místech v Praze – na Harfě a v centru na Opletalově.</p>
+          </div>
+          <div class="contact__meta">
+            <a class="contact__phone" href="tel:+420776284433">
+              <svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+              +420 776 284 433
+            </a>
+            <div class="socials">
+              <a href="https://www.instagram.com/monkey.coffee.house/" target="_blank" rel="noopener" aria-label="Instagram">
+                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg>
+                Instagram
+              </a>
+              <a href="https://www.facebook.com/monkeycoffeehouse/" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/></svg>
+                Facebook
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Otevírací doba poboček je i v main.js (BRANCHES) – při změně upravte obojí -->
+        <div class="branches">
+          <article class="branch" data-branch="harfa">
+            <div class="branch__map">
+              <iframe
+                title="Mapa – Monkey Coffee House, Pod Harfou 23, Praha 9"
+                src="https://maps.google.com/maps?q=Pod%20Harfou%2023%2C%20190%2000%20Praha&z=16&output=embed"
+                loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+            </div>
+            <div class="branch__body">
+              <div class="branch__head">
+                <h3>Harfa <small>Praha 9 – Vysočany</small></h3>
+                <p class="status"><span class="status__dot"></span><span class="status__text">Otevírací doba</span></p>
+              </div>
+              <p class="branch__addr">Pod Harfou 23<br>190 00 Praha 9</p>
+              <table class="hours">
+                <tr data-days="1,2,3,4,5"><td>Pondělí – Pátek</td><td>8:00 – 18:00</td></tr>
+                <tr data-days="6,0"><td>Sobota – Neděle</td><td>10:00 – 18:00</td></tr>
+              </table>
+              <a class="link" href="https://www.google.com/maps/dir/?api=1&destination=Pod+Harfou+23,+190+00+Praha" target="_blank" rel="noopener">Navigovat ↗</a>
+            </div>
+          </article>
+
+          <article class="branch" data-branch="opletalova">
+            <div class="branch__map">
+              <iframe
+                title="Mapa – Monkey Coffee House, Opletalova 922/8, Praha 1"
+                src="https://maps.google.com/maps?q=Monkey%20Coffee%20House%2C%20Opletalova%20922%2F8%2C%20110%2000%20Praha&z=16&output=embed"
+                loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+            </div>
+            <div class="branch__body">
+              <div class="branch__head">
+                <h3>Opletalova <small>Praha 1 – Nové Město</small></h3>
+                <p class="status"><span class="status__dot"></span><span class="status__text">Otevírací doba</span></p>
+              </div>
+              <p class="branch__addr">Opletalova 922/8<br>110 00 Praha 1 – Nové Město</p>
+              <table class="hours">
+                <tr data-days="1,2,3,4,5"><td>Pondělí – Pátek</td><td>8:00 – 18:00</td></tr>
+                <tr data-days="6,0"><td>Sobota – Neděle</td><td>9:00 – 18:00</td></tr>
+              </table>
+              <a class="link" href="https://www.google.com/maps/dir/?api=1&destination=Opletalova+922%2F8,+110+00+Praha" target="_blank" rel="noopener">Navigovat ↗</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p><strong>Monkey Coffee House</strong> · Specialty Coffee Sanctuary · Pod Harfou 23, Praha 9 · Opletalova 922/8, Praha 1</p>
+      <p>© <span id="year"></span> · #Coffee #Tea #Wine #Cookies</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

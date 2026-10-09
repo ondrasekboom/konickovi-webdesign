@@ -1,0 +1,1155 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Koníčkovi webdesign · portfolio</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cstyle%3E.k%7Bfill:%2317150f%7D%40media (prefers-color-scheme:dark)%7B.k%7Bfill:%23ffffff%7D%7D%3C/style%3E%3Cpath class='k' d='M16 34 L21 25.5 L12 27.5 Q9 27.5 8.5 24.5 Q8.5 22 10.5 20.5 L19 11 L24 6 L27 2.5 L29.5 8.5 Q36.5 14 35.5 24 Q35 30 33 34 Z'/%3E%3Crect class='k' x='14' y='34.5' width='20' height='3.5' rx='1'/%3E%3Crect class='k' x='11' y='39.5' width='26' height='4.5' rx='1.2'/%3E%3Ccircle cx='21.5' cy='15' r='1.9' fill='%2389cff0'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Alfa+Slab+One&family=Bricolage+Grotesque:opsz,wght@96,800&family=Cinzel:wght@600&family=JetBrains+Mono:wght@500&family=Karla:wght@700&family=Cormorant+Garamond:wght@600&family=Anton&family=Barlow+Condensed:wght@600&display=swap">
+<style>
+  :root {
+    --bg: #121110;
+    --surface: #1b1a18;
+    --ink: #f3efe8;
+    --muted: #a39d93;
+    --line: rgba(243, 239, 232, 0.12);
+    --accent: #89cff0;
+    --accent-soft: #89cff0;
+    /* Text laid on the baby blue itself. */
+    --accent-ink: #0c1a22;
+    --shadow: 0 30px 60px -36px rgba(0, 0, 0, 0.8);
+    --sans: 'Schibsted Grotesk', 'Helvetica Neue', Arial, sans-serif;
+    --mono: 'JetBrains Mono', Consolas, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  :focus-visible { outline: 2px solid var(--accent-soft); outline-offset: 3px; }
+
+  .container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  .label {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ——— Top bar ——— */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .topbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 64px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+  }
+
+  .brand-sub {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-left: 2px;
+    transform: translateY(1px);
+  }
+
+  .brand-mark {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    color: var(--ink);
+  }
+
+  .brand { gap: 8px; font-size: 20px; letter-spacing: -0.04em; }
+
+  .topnav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .topnav a:not(.btn) { color: var(--muted); transition: color .2s; }
+  .topnav a:not(.btn):hover { color: var(--ink); }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 15px;
+    border: 1px solid transparent;
+    transition: transform .2s, background-color .2s, border-color .2s, color .2s;
+  }
+
+  .btn:hover { transform: translateY(-2px); }
+  .btn-accent { background: var(--accent); color: var(--accent-ink); }
+  .btn-line { border-color: var(--line); color: var(--ink); }
+  .btn-line:hover { border-color: var(--ink); }
+  .btn-small { padding: 9px 16px; font-size: 14px; }
+
+  /* ——— Hero ——— */
+  .hero { padding: 96px 0 56px; }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: 56px;
+    align-items: end;
+  }
+
+  .hero h1 {
+    font-size: clamp(44px, 6.6vw, 92px);
+    font-weight: 800;
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    margin-top: 18px;
+    text-wrap: balance;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent-soft);
+  }
+
+  .hero-side p {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 42ch;
+  }
+
+  .hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 64px;
+    border-top: 1px solid var(--line);
+  }
+
+  .stat {
+    padding: 22px 0 0;
+  }
+
+  .stat + .stat { padding-left: 24px; border-left: 1px solid var(--line); }
+
+  .stat b {
+    display: block;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .stat span { display: block; margin-top: 8px; color: var(--muted); font-size: 15px; }
+
+  /* ——— Ticker of project names, each in its own brand type ——— */
+  .ticker {
+    position: relative;
+    overflow: hidden;
+    border-block: 1px solid var(--line);
+    padding: 22px 0;
+    margin-top: 24px;
+  }
+
+  /* Edge fades as overlays (a mask on the moving strip breaks painting in some Chromium builds) */
+  .ticker::before,
+  .ticker::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 8%;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .ticker::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
+  .ticker::after { right: 0; background: linear-gradient(270deg, var(--bg), transparent); }
+
+  .ticker-track {
+    display: flex;
+    width: max-content;
+    animation: ticker 36s linear infinite;
+  }
+
+  .ticker:hover .ticker-track { animation-play-state: paused; }
+
+  .ticker-set {
+    display: flex;
+    align-items: center;
+    gap: 44px;
+    padding-right: 44px;
+    font-size: 34px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .t-sep { width: 22px; height: 22px; flex-shrink: 0; color: var(--accent-soft); --eye: var(--bg); }
+  .t-manolo { font-family: 'Karla', sans-serif; font-weight: 700; letter-spacing: 0.08em; }
+  .t-vinci { font-family: 'Cinzel', serif; font-weight: 600; letter-spacing: 0.06em; }
+  .t-olivers { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; letter-spacing: -0.03em; }
+  .t-daves { font-family: 'Alfa Slab One', serif; }
+  .t-listek { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 40px; }
+  .t-map { font-family: var(--sans); font-weight: 800; letter-spacing: -0.03em; }
+
+  @keyframes ticker { to { transform: translateX(-50%); } }
+
+  /* ——— Section heads ——— */
+  .section { padding: 96px 0; }
+
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .section-head h2 {
+    font-size: clamp(34px, 4.4vw, 56px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-top: 10px;
+  }
+
+  .section-head h2 sup {
+    font-family: var(--mono);
+    font-size: 0.32em;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--accent-soft);
+    vertical-align: super;
+    margin-left: 6px;
+  }
+
+  .section-head p { color: var(--muted); max-width: 40ch; }
+
+  .projects { padding-top: 72px; }
+
+  /* ——— Manolo Café card (live project) ——— */
+  a.project-card {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a.project-card:hover {
+    text-decoration: none;
+  }
+
+  .project-manolo .project-visual {
+    background:
+      radial-gradient(120% 100% at 78% 14%, rgba(201,144,63,0.32) 0%, transparent 60%),
+      linear-gradient(155deg, #1e3c34 0%, #10201c 100%);
+  }
+
+  .client-logo {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+  }
+
+  .project-manolo .client-logo {
+    outline: 1px solid #fff;
+    outline-offset: 5px;
+  }
+
+  .live-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #f2ede3;
+    background: rgba(16,32,28,0.72);
+    border: 1px solid rgba(242,237,227,0.18);
+    border-radius: 999px;
+    padding: 4px 10px 4px 8px;
+  }
+
+  .live-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #7fd39a;
+  }
+
+  /* ——— VINCI Nail Bar card ——— */
+  .project-vinci .project-visual {
+    background: #f7f6f4;
+  }
+
+  /* ——— Oliver's Café card ——— */
+  .project-olivers .project-visual {
+    background: #1f2346;
+  }
+
+  .olivers-word {
+    position: relative;
+    z-index: 1;
+    font-family: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 800;
+    font-size: 50px;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    color: #f7efe2;
+    transform: translateY(6px);
+  }
+
+  /* ——— Falltrip card ——— */
+  .project-falltrip .project-visual {
+    background: radial-gradient(circle at 50% 45%, #1b2440 0%, #0a0e1a 70%);
+  }
+
+  .falltrip-globe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ——— Monkey Coffee House card ——— */
+  .project-monkey .project-visual {
+    background: #f6efe4;
+  }
+
+  .monkey-logo {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  /* ——— FK Vlčí Důl card ——— */
+  .project-vlci .project-visual {
+    background:
+      repeating-linear-gradient(74deg, rgba(255,255,255,0.05) 0 18px, transparent 18px 42px),
+      linear-gradient(170deg, #1d2419 0%, #10140e 65%, #070a06 100%);
+  }
+
+  .vlci-crest {
+    position: relative;
+    z-index: 1;
+    width: 108px;
+    height: 129px;
+    filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.5));
+  }
+
+  /* ——— Lístek florist card ——— */
+  .project-listek .project-visual {
+    background: #fff3ea;
+  }
+
+  .listek-mark {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 56px;
+    line-height: 1;
+    color: #1f2a22;
+    transform: translateY(6px);
+  }
+
+  .listek-mark svg {
+    width: 44px;
+    height: 44px;
+  }
+
+  /* ——— Dave's Barber Shop card ——— */
+  .project-daves .project-visual {
+    background: #ffffff;
+  }
+
+  .daves-mark {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: #141a2e;
+    text-align: left;
+    transform: translateY(10px);
+  }
+
+  .daves-pole {
+    width: 16px;
+    height: 76px;
+    border-radius: 3px;
+    background: repeating-linear-gradient(135deg, #d62839 0 10px, #ffffff 10px 20px, #2f5da8 20px 30px, #ffffff 30px 40px);
+    box-shadow: 0 -6px 0 #141a2e, 0 6px 0 #141a2e, inset 0 0 0 1.5px #141a2e;
+  }
+
+  .daves-word {
+    display: block;
+    font-family: 'Alfa Slab One', 'Rockwell', Georgia, serif;
+    font-size: 40px;
+    line-height: 1;
+  }
+
+
+  .daves-sub {
+    display: block;
+    margin-top: 6px;
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #2f5da8;
+  }
+
+  .project-link {
+    display: inline-block;
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .project-year {
+    display: flex;
+    align-items: baseline;
+  }
+
+  a.project-card:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* ——— Project cards ——— */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+    counter-reset: proj;
+  }
+
+  .projects-grid > .project-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc(50% - 14px);
+  }
+
+  .project-card {
+    counter-increment: proj;
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    overflow: hidden;
+    transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  }
+
+  .project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow);
+    border-color: var(--accent-soft);
+  }
+
+  .project-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 320px;
+    margin: 10px 10px 0;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .project-visual > :not(.live-badge):not(.falltrip-globe) {
+    zoom: 1.8;
+    transition: transform .5s ease;
+  }
+
+  .falltrip-globe { transition: transform .6s ease; }
+
+  .project-card:hover .project-visual > :not(.live-badge) { transform: scale(1.05); }
+
+  .projects-grid .live-badge {
+    top: 14px;
+    left: 14px;
+    font-size: 11px;
+    padding: 5px 12px 5px 10px;
+  }
+
+  .project-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 20px 26px 24px;
+  }
+
+  .project-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+
+  .project-meta::before {
+    content: counter(proj, decimal-leading-zero);
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent-soft);
+  }
+
+  .project-meta > div {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px 16px;
+  }
+
+  .project-title {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+
+  .project-category {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .project-description {
+    font-size: 15.5px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 22px;
+  }
+
+  .project-year {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+
+  .project-link {
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    padding: 8px 16px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    transition: background-color .25s, color .25s, border-color .25s;
+  }
+
+  .project-card:hover .project-link {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  /* ——— Process ——— */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    list-style: none;
+    counter-reset: step;
+  }
+
+  .steps li {
+    counter-increment: step;
+    padding: 26px 24px 28px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+  }
+
+  .steps li::before {
+    content: counter(step, decimal-leading-zero);
+    display: block;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent-soft);
+    margin-bottom: 36px;
+  }
+
+  .steps h3 {
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .steps p { color: var(--muted); font-size: 15px; }
+
+  /* ——— Contact ——— */
+  .contact {
+    padding: 0 0 28px;
+  }
+
+  .contact-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-radius: 28px;
+    padding: clamp(40px, 7vw, 88px);
+  }
+
+  /* Big knight from the logo, stepping into the card from the right */
+  .contact-card > .contact-knight {
+    position: absolute;
+    z-index: 0;
+    right: -40px;
+    bottom: -30px;
+    width: 420px;
+    height: 420px;
+    color: rgba(12, 26, 34, 0.16);
+    --eye: var(--accent);
+  }
+
+  .contact-card > * { position: relative; z-index: 1; }
+
+  .contact-card .label { color: rgba(12, 26, 34, 0.65); }
+
+  .contact-card h2 {
+    font-size: clamp(40px, 6.4vw, 88px);
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    line-height: 0.98;
+    margin-top: 16px;
+    max-width: 12ch;
+  }
+
+  .contact-mail {
+    display: inline-block;
+    margin-top: 36px;
+    font-size: clamp(20px, 2.6vw, 30px);
+    font-weight: 600;
+    border-bottom: 2px solid rgba(12, 26, 34, 0.5);
+    padding-bottom: 4px;
+    transition: color .2s;
+  }
+
+  .contact-mail:hover { color: rgba(12, 26, 34, 0.7); }
+
+  .contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .contact-links a,
+  .contact-links button {
+    font-family: inherit;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(12, 26, 34, 0.35);
+    font-weight: 600;
+    font-size: 15px;
+    transition: background-color .2s, color .2s;
+  }
+
+  .contact-links a:hover,
+  .contact-links button:hover { background: var(--accent-ink); color: var(--accent); }
+
+  .foot-brand { display: inline-flex; align-items: center; gap: 8px; }
+  .foot-brand .brand-mark { width: 22px; height: 22px; color: var(--muted); }
+
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 28px 0 36px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  /* ——— Responsive ——— */
+  @media (max-width: 960px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 28px; }
+    .steps { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 760px) {
+    .topnav a:not(.btn) { display: none; }
+    .hero { padding: 56px 0 40px; }
+    .stats { margin-top: 44px; }
+    .stat + .stat { padding-left: 16px; }
+    .section { padding: 64px 0; }
+    .projects { padding-top: 48px; }
+    .section-head { flex-direction: column; align-items: start; }
+    .projects-grid { grid-template-columns: 1fr; gap: 20px; }
+    .projects-grid > .project-card:last-child:nth-child(odd) { width: 100%; }
+    .project-visual { height: 230px; }
+    .project-visual > :not(.live-badge):not(.falltrip-globe) { zoom: 1.35; }
+    .project-info { padding: 18px 20px 20px; }
+    .project-title { font-size: 22px; }
+    .ticker-set { font-size: 26px; gap: 32px; padding-right: 32px; }
+    .t-listek { font-size: 30px; }
+    .steps { grid-template-columns: 1fr; }
+    .steps li::before { margin-bottom: 18px; }
+    .contact-card > .contact-knight { width: 220px; height: 220px; right: -50px; bottom: -20px; opacity: 0.35; }
+    .foot-brand { display: inline-flex; align-items: center; gap: 8px; }
+  .foot-brand .brand-mark { width: 22px; height: 22px; color: var(--muted); }
+
+  .foot { flex-direction: column; }
+  }
+
+  @media (max-width: 420px) {
+    .container { padding: 0 16px; }
+    .brand-sub { display: none; }
+    .stat span { font-size: 13px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="konik" viewBox="0 0 48 48">
+    <path d="M16 34 L21 25.5 L12 27.5 Q9 27.5 8.5 24.5 Q8.5 22 10.5 20.5 L19 11 L24 6 L27 2.5 L29.5 8.5 Q36.5 14 35.5 24 Q35 30 33 34 Z" fill="currentColor"/>
+    <rect x="14" y="34.5" width="20" height="3.5" rx="1" fill="currentColor"/>
+    <rect x="11" y="39.5" width="26" height="4.5" rx="1.2" fill="currentColor"/>
+    <circle cx="21.5" cy="15" r="1.9" fill="var(--eye, var(--accent))"/>
+  </symbol>
+</svg>
+
+
+<header class="topbar">
+  <div class="container">
+    <a class="brand" href="#top" aria-label="Koníčkovi webdesign"><svg class="brand-mark" aria-hidden="true"><use href="#konik"/></svg>Koníčkovi<span class="brand-sub">webdesign</span></a>
+    <nav class="topnav" aria-label="Hlavní navigace">
+      <a href="#projekty">Moje práce</a>
+      <a href="#postup">Postup</a>
+      <a href="#kontakt">Kontakt</a>
+      <a href="projekty.html">Projekty</a>
+      <a class="btn btn-accent btn-small" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=webdesign@konickovi.cz&amp;su=Popt%C3%A1vka%20webu" target="_blank" rel="noopener">Napsat mi</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <p class="label">Koníčkovi webdesign · weby na míru</p>
+          <h1>Weby pro kavárny, studia a <em>malé podniky</em>.</h1>
+        </div>
+        <div class="hero-side">
+          <p>Navrhuji a stavím weby na míru. Každý projekt má vlastní nápad, kterým se odliší.</p>
+          <div class="hero-cta">
+            <a class="btn btn-accent" href="#projekty">Prohlédnout projekty ↓</a>
+            <a class="btn btn-line" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=webdesign@konickovi.cz&amp;su=Popt%C3%A1vka%20webu" target="_blank" rel="noopener">Napsat e-mail</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b>8</b><span>projektů</span></div>
+        <div class="stat"><b>6</b><span>různých oborů</span></div>
+        <div class="stat"><b>0</b><span>šablon, vše na míru</span></div>
+      </div>
+    </div>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <div class="ticker-set">
+          <span class="t-manolo">MANOLO</span><svg class="t-sep" aria-hidden="true"><use href="#konik"/></svg>
+          <span class="t-vinci">VINCI</span><svg class="t-sep" aria-hidden="true"><use href="#konik"/></svg>
+          <span class="t-olivers">Oliver's</span><svg class="t-sep" aria-hidden="true"><use href="#konik"/></svg>
+          <span class="t-daves">Dave’s</span><svg class="t-sep" aria-hidden="true"><use href="#konik"/></svg>
+          <span class="t-listek">Lístek</span><svg class="t-sep" aria-hidden="true"><use href="#konik"/></svg>
+          <span class="t-map">Map Of Europe</span><svg class="t-sep" aria-hidden="true"><use href="#konik"/></svg>
+        </div>
+        <div class="ticker-set">
+          <span class="t-manolo">MANOLO</span><svg class="t-sep" aria-hidden="true"><use href="#konik"/></svg>
+          <span class="t-vinci">VINCI</span><svg class="t-sep" aria-hidden="true"><use href="#konik"/></svg>
+          <span class="t-olivers">Oliver's</span><svg class="t-sep" aria-hidden="true"><use href="#konik"/></svg>
+          <span class="t-daves">Dave’s</span><svg class="t-sep" aria-hidden="true"><use href="#konik"/></svg>
+          <span class="t-listek">Lístek</span><svg class="t-sep" aria-hidden="true"><use href="#konik"/></svg>
+          <span class="t-map">Map Of Europe</span><svg class="t-sep" aria-hidden="true"><use href="#konik"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section projects" id="projekty">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="label">Weby pro klienty</p>
+          <h2>Moje práce<sup>(07)</sup></h2>
+        </div>
+        <p>Každý web otevřete v nové záložce. Všechny fungují i na mobilu.</p>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Manolo Café (live) -->
+        <a class="project-card project-manolo" href="manolo.html" target="_blank" rel="noopener">
+          <div class="project-visual">
+            <span class="live-badge">Živý web</span>
+            <svg class="client-logo" viewBox="0 0 200 200" role="img" aria-label="Logo Manolo">
+              <rect x="60" y="40" width="80" height="80" rx="11" fill="none" stroke="#f2ede3" stroke-width="6"/>
+              <path d="M100 50 L130 80 L100 110 L70 80 Z" fill="#f2ede3"/>
+              <circle cx="100" cy="80" r="9" fill="#17302a"/>
+              <text x="102.25" y="162" text-anchor="middle" font-family="Karla, Arial, sans-serif" font-weight="700" font-size="18" letter-spacing="4.5" fill="#f2ede3">MANOLO</text>
+            </svg>
+          </div>
+          <div class="project-info">
+            <div class="project-meta">
+              <div>
+                <div class="project-title">Manolo Café</div>
+                <div class="project-category">Kavárna</div>
+              </div>
+            </div>
+            <p class="project-description">Web pro specialty kavárnu. Menu s cenami, příběh kavárny a nabídka pečiva z vlastní pece.</p>
+            <div class="project-year">2026<span class="project-link">Zobrazit web →</span></div>
+          </div>
+        </a>
+
+        <!-- VINCI Nail Bar (live) -->
+        <a class="project-card project-vinci" href="vinci.html" target="_blank" rel="noopener">
+          <div class="project-visual">
+            <span class="live-badge">Živý web</span>
+            <svg class="client-logo" viewBox="0 0 200 200" role="img" aria-label="Logo VINCI Nail Bar">
+              <g transform="translate(100 70) scale(0.85)" fill="none" stroke="#1d1a22" stroke-linejoin="round">
+                <circle r="36" stroke-width="2"/>
+                <path d="M0 -24 C 12 -24 15 -9 15 5 L 15 17 Q 15 23 9 23 L -9 23 Q -15 23 -15 17 L -15 5 C -15 -9 -12 -24 0 -24 Z" stroke-width="2.2"/>
+                <path d="M-6 -13 L -6 12" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+              </g>
+              <text x="100.75" y="146" text-anchor="middle" font-family="Cinzel, Georgia, serif" font-weight="600" font-size="34" letter-spacing="1.5" fill="#1d1a22">VINCI</text>
+              <text x="101.5" y="166" text-anchor="middle" font-family="Cinzel, Georgia, serif" font-weight="600" font-size="11" letter-spacing="3" fill="#1d1a22">NAIL BAR</text>
+            </svg>
+          </div>
+          <div class="project-info">
+            <div class="project-meta">
+              <div>
+                <div class="project-title">VINCI Nail Bar</div>
+                <div class="project-category">Nehtové studio</div>
+              </div>
+            </div>
+            <p class="project-description">Web pro nehtové studio pojatý jako galerie. Služby a ceník jako popisky vystavených děl.</p>
+            <div class="project-year">2026<span class="project-link">Zobrazit web →</span></div>
+          </div>
+        </a>
+
+        <!-- Oliver's Café (live) -->
+        <a class="project-card project-olivers" href="olivers.html" target="_blank" rel="noopener">
+          <div class="project-visual">
+            <span class="live-badge">Živý web</span>
+            <span class="olivers-word" aria-hidden="true">Oliver's</span>
+          </div>
+          <div class="project-info">
+            <div class="project-meta">
+              <div>
+                <div class="project-title">Oliver's Café</div>
+                <div class="project-category">Kavárna</div>
+              </div>
+            </div>
+            <p class="project-description">Web pro ranní kavárnu, který žije podle skutečného času. Menu s cenami je rozložené do pásů dne.</p>
+            <div class="project-year">2026<span class="project-link">Zobrazit web →</span></div>
+          </div>
+        </a>
+
+        <!-- Dave's Barber Shop (live) -->
+        <a class="project-card project-daves" href="daves.html" target="_blank" rel="noopener">
+          <div class="project-visual">
+            <span class="live-badge">Živý web</span>
+            <div class="daves-mark" aria-hidden="true">
+              <span class="daves-pole"></span>
+              <span>
+                <span class="daves-word">Dave<span>’</span>s</span>
+                <span class="daves-sub">Barber Shop</span>
+              </span>
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-meta">
+              <div>
+                <div class="project-title">Dave's Barber Shop</div>
+                <div class="project-category">Barber shop</div>
+              </div>
+            </div>
+            <p class="project-description">Web pro barber shop. Ceník, živý stav otevírací doby a týdenní rozvrh.</p>
+            <div class="project-year">2026<span class="project-link">Zobrazit web →</span></div>
+          </div>
+        </a>
+
+        <!-- Falltrip (live app) -->
+        <a class="project-card project-falltrip" href="https://falltrip.lovable.app" target="_blank" rel="noopener">
+          <div class="project-visual">
+            <span class="live-badge">Živá aplikace</span>
+            <svg class="falltrip-globe" viewBox="0 0 243 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs>
+                <clipPath id="ft-globe-clip"><circle cx="121.5" cy="178" r="138"/></clipPath>
+              </defs>
+              <circle cx="121.5" cy="178" r="143" fill="none" stroke="#aad3df" stroke-opacity="0.22" stroke-width="10"/>
+              <circle cx="121.5" cy="178" r="138" fill="#aad3df"/>
+              <g clip-path="url(#ft-globe-clip)" fill="none" stroke="#232c3f" stroke-opacity="0.16" stroke-width="1">
+                <ellipse cx="121.5" cy="178" rx="46" ry="138"/>
+                <ellipse cx="121.5" cy="178" rx="96" ry="138"/>
+                <line x1="121.5" y1="30" x2="121.5" y2="320"/>
+                <ellipse cx="121.5" cy="118" rx="138" ry="26"/>
+                <ellipse cx="121.5" cy="160" rx="138" ry="32"/>
+              </g>
+              <g fill="none" stroke="#b4532e" stroke-width="1.4" stroke-dasharray="3 3">
+                <path d="M121 72 Q 92 52 72 100"/>
+                <path d="M121 72 Q 104 44 84 60"/>
+                <path d="M121 72 Q 136 86 126 104"/>
+              </g>
+              <g fill="#b4532e" stroke="#faf7f0" stroke-width="1.2">
+                <circle cx="84" cy="60" r="3"/>
+                <circle cx="97" cy="64" r="3"/>
+                <circle cx="102" cy="78" r="3"/>
+                <circle cx="108" cy="60" r="3"/>
+                <circle cx="86" cy="98" r="3"/>
+                <circle cx="72" cy="100" r="3"/>
+                <circle cx="126" cy="104" r="3"/>
+                <circle cx="122" cy="56" r="3"/>
+                <circle cx="118" cy="47" r="3"/>
+                <circle cx="141" cy="60" r="3"/>
+                <circle cx="133" cy="80" r="3"/>
+                <circle cx="143" cy="86" r="3"/>
+              </g>
+              <circle cx="121" cy="72" r="9" fill="#232c3f" fill-opacity="0.18"/>
+              <circle cx="121" cy="72" r="4.5" fill="#232c3f" stroke="#faf7f0" stroke-width="1.6"/>
+            </svg>
+          </div>
+          <div class="project-info">
+            <div class="project-meta">
+              <div>
+                <div class="project-title">Map Of Europe</div>
+                <div class="project-category">Webová aplikace</div>
+              </div>
+            </div>
+            <p class="project-description">Interaktivní 3D glóbus Evropy pro plánování podzimního výletu. Ceny cesty z Prahy, tipy na místa a žebříček měst.</p>
+            <div class="project-year">2026<span class="project-link">Otevřít aplikaci →</span></div>
+          </div>
+        </a>
+
+        <!-- FK Vlčí Důl (live) -->
+        <a class="project-card project-vlci" href="vlcidul.html" target="_blank" rel="noopener">
+          <div class="project-visual">
+            <span class="live-badge">Živý web</span>
+            <svg class="vlci-crest" viewBox="0 0 124 148" aria-hidden="true">
+              <path d="M62 2 L120 20 V76 C120 110 96 133 62 146 C28 133 4 110 4 76 V20 Z" fill="#d6ff3f"/>
+              <path d="M62 9 L113 25 V76 C113 105 92 126 62 138 C32 126 11 105 11 76 V25 Z" fill="#10140e"/>
+              <path d="M62 15 L107 29 V76 C107 101 89 120 62 131 C35 120 17 101 17 76 V29 Z" fill="none" stroke="#d6ff3f" stroke-width="1.6"/>
+              <path d="M62 9 L113 25 V42 H11 V25 Z" fill="#d6ff3f"/>
+              <text x="62" y="36" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="16" letter-spacing="1.2" fill="#10140e">FK VLČÍ DŮL</text>
+              <g stroke="#d6ff3f" stroke-width="4.5" stroke-linecap="round">
+                <path d="M44 58 L80 92"/>
+                <path d="M80 58 L44 92"/>
+              </g>
+              <path d="M40 54 q9 -2 9 7 q-9 2 -9 -7 Z" fill="#d6ff3f"/>
+              <path d="M84 54 q-9 -2 -9 7 q9 2 9 -7 Z" fill="#d6ff3f"/>
+              <circle cx="62" cy="74" r="17" fill="#ffffff" stroke="#10140e" stroke-width="1.6"/>
+              <path d="M62 65 l7.6 5.5 -2.9 9h-9.4l-2.9 -9 Z" fill="#10140e"/>
+              <g stroke="#10140e" stroke-width="1.6" fill="none" stroke-linecap="round">
+                <path d="M62 65 V58"/>
+                <path d="M54.4 70.5 L47.5 66.5"/>
+                <path d="M69.6 70.5 L76.5 66.5"/>
+                <path d="M57.3 79.5 L54 87"/>
+                <path d="M66.7 79.5 L70 87"/>
+              </g>
+              <path d="M24 100 H100 L93 110 L100 120 H24 L31 110 Z" fill="#d6ff3f"/>
+              <text x="62" y="114" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="14" letter-spacing="2.5" fill="#10140e">1924</text>
+            </svg>
+          </div>
+          <div class="project-info">
+            <div class="project-meta">
+              <div>
+                <div class="project-title">FK Vlčí Důl</div>
+                <div class="project-category">Fotbalový klub</div>
+              </div>
+            </div>
+            <p class="project-description">Oficiální web vesnického klubu. Program zápasů, soupiska a tabulka soutěže.</p>
+            <div class="project-year">2026<span class="project-link">Zobrazit web →</span></div>
+          </div>
+        </a>
+
+        <!-- Lístek florist (live) -->
+        <a class="project-card project-listek" href="listek.html" target="_blank" rel="noopener">
+          <div class="project-visual">
+            <span class="live-badge">Živý web</span>
+            <div class="listek-mark" aria-hidden="true">
+              <svg viewBox="0 0 40 40">
+                <path d="M20 36 C20 26 20 20 20 14" stroke="#3f5e47" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+                <path d="M20 24 C12 24 8 18 8 12 C14 12 20 16 20 24 Z" fill="#3f5e47"/>
+                <path d="M20 20 C28 20 32 14 32 8 C26 8 20 12 20 20 Z" fill="#e0513f"/>
+              </svg>
+              Lístek
+            </div>
+          </div>
+          <div class="project-info">
+            <div class="project-meta">
+              <div>
+                <div class="project-title">Lístek</div>
+                <div class="project-category">Květinářství</div>
+              </div>
+            </div>
+            <p class="project-description">Web pro květinový ateliér. Kytice se skládá přímo na stránce podle příležitosti, velikosti a balení.</p>
+            <div class="project-year">2026<span class="project-link">Zobrazit web →</span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="postup" style="padding-top:24px">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="label">Jak spolupracujeme</p>
+          <h2>Postup</h2>
+        </div>
+        <p>Od prvního rozhovoru po spuštění. Průběžně vidíte, jak web vzniká.</p>
+      </div>
+      <ol class="steps">
+        <li>
+          <h3>Rozhovor</h3>
+          <p>Zjistím, co děláte, pro koho, co má web umět a jakou máte představu.</p>
+        </li>
+        <li>
+          <h3>Nápad a návrh</h3>
+          <p>Najdeme jeden nápad, který web odliší od konkurence, a na něm stavím celý vzhled.</p>
+        </li>
+        <li>
+          <h3>Vývoj</h3>
+          <p>Zprovozním web, který funguje na mobilu i na počítači a dá se snadno upravovat.</p>
+        </li>
+        <li>
+          <h3>Spuštění</h3>
+          <p>Web vypustím do světa a pomůžu s úpravami, když se něco bude měnit.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="contact" id="kontakt">
+    <div class="container">
+      <div class="contact-card">
+        <svg class="contact-knight" aria-hidden="true"><use href="#konik"/></svg>
+        <p class="label">Kontakt</p>
+        <h2>Máte projekt? Napište mi.</h2>
+        <a class="contact-mail" href="mailto:webdesign@konickovi.cz?subject=Popt%C3%A1vka%20webu">webdesign@konickovi.cz</a>
+        <div class="contact-links">
+          <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=webdesign@konickovi.cz&amp;su=Popt%C3%A1vka%20webu" target="_blank" rel="noopener">Napsat přes Gmail ↗</a>
+          <button type="button" id="copyMail" data-mail="webdesign@konickovi.cz">Zkopírovat adresu</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="container foot">
+  <span class="foot-brand"><svg class="brand-mark" aria-hidden="true"><use href="#konik"/></svg>© 2026 · Koníčkovi webdesign</span>
+  <a href="#top">Nahoru ↑</a>
+</footer>
+
+<script>
+  // Some browsers have no mail app registered, so mailto: does nothing.
+  // The copy button always works; the Gmail link covers webmail users.
+  const copyBtn = document.getElementById('copyMail');
+  copyBtn.addEventListener('click', async () => {
+    const mail = copyBtn.dataset.mail;
+    try {
+      await navigator.clipboard.writeText(mail);
+    } catch {
+      const t = document.createElement('textarea');
+      t.value = mail;
+      document.body.appendChild(t);
+      t.select();
+      document.execCommand('copy');
+      t.remove();
+    }
+    copyBtn.textContent = 'Zkopírováno ✓';
+    setTimeout(() => (copyBtn.textContent = 'Zkopírovat adresu'), 2000);
+  });
+
+</script>
+
+</body>
+</html>

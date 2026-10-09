@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FK Vlčí Důl · oficiální web fotbalového klubu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700&display=swap">
+<style>
+  :root {
+    --club:    #10140e;
+    --club-d:  #050704;
+    --acid:    #d6ff3f;
+    --acid-ink: #46610a;
+    --ink:     #10141c;
+    --muted:   #5d6470;
+    --paper:   #ffffff;
+    --grey:    #f1f3f7;
+    --line:    rgba(16, 20, 28, 0.12);
+    --cond:    'Barlow Condensed', 'Arial Narrow', sans-serif;
+    --body:    'Barlow', 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--grey);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 3px solid var(--acid-ink); outline-offset: 2px; }
+
+  .shell {
+    max-width: 1320px;
+    margin-inline: auto;
+    background: var(--paper);
+    box-shadow: 0 0 60px rgba(16, 20, 14, 0.12);
+  }
+
+  .wrap { width: 100%; max-width: 1180px; margin-inline: auto; padding-inline: 24px; }
+
+  h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; line-height: 1.08; }
+
+  /* ——— Club stripe + nav ——— */
+  .stripe { display: flex; height: 7px; }
+  .stripe i { flex: 1; }
+  .stripe i:nth-child(1) { background: var(--acid); }
+  .stripe i:nth-child(2) { background: var(--club); }
+  .stripe i:nth-child(3) { background: var(--acid); }
+
+  .nav {
+    position: relative;
+    background: var(--club);
+    color: #fff;
+  }
+
+  .nav-in {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 20px;
+    min-height: 84px;
+  }
+
+  .nav-links { display: flex; gap: 26px; list-style: none; padding: 0; margin: 0; }
+  .nav-links.right { justify-content: flex-end; }
+  .nav-links a {
+    font-family: var(--cond);
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    padding-bottom: 3px;
+    border-bottom: 3px solid transparent;
+    transition: border-color .2s;
+  }
+  .nav-links a:hover { border-bottom-color: var(--acid); }
+
+  .crest-slot { width: 128px; }
+
+  .crest {
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    transform: translateX(-50%);
+    z-index: 5;
+    filter: drop-shadow(0 8px 16px rgba(16, 20, 14, 0.35));
+  }
+  .crest svg { display: block; width: 124px; height: 148px; }
+
+  /* ——— Hero ——— */
+  .hero {
+    position: relative;
+    color: var(--ink);
+    background:
+      radial-gradient(65% 55% at 14% 0%, rgba(214, 255, 63, 0.35), transparent 62%),
+      repeating-linear-gradient(90deg, rgba(16,20,14,0.05) 0 2px, transparent 2px 96px),
+      #ffffff;
+    overflow: hidden;
+  }
+
+  /* floodlit pitch stripes */
+  .hero::after {
+    content: '';
+    position: absolute;
+    left: -10%;
+    right: -10%;
+    bottom: -8%;
+    height: 62%;
+    background: repeating-linear-gradient(74deg, rgba(16,20,14,0.045) 0 40px, transparent 40px 92px);
+    transform: perspective(600px) rotateX(48deg);
+    pointer-events: none;
+  }
+
+  .hero-in {
+    position: relative;
+    z-index: 2;
+    padding: 84px 0 130px;
+  }
+
+  .kicker { font-family: var(--cond); font-weight: 700; font-size: 18px; letter-spacing: 0.04em; color: var(--acid-ink); }
+  .hero h1 { font-size: clamp(38px, 5.6vw, 72px); margin-top: 10px; max-width: 18ch; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+
+  .btn {
+    display: inline-block;
+    font-family: var(--cond);
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    transition: transform .18s, background-color .18s, color .18s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-yellow { background: var(--acid); color: var(--ink); }
+  .btn-ghost { border-color: rgba(16,20,14,0.35); color: var(--ink); }
+  .btn-ghost:hover { background: var(--club); color: #fff; }
+
+  /* ——— Fixtures strip ——— */
+  .fixtures {
+    position: relative;
+    z-index: 3;
+    margin: -72px auto 0;
+    max-width: 1180px;
+    background: var(--paper);
+    box-shadow: 0 18px 40px -24px rgba(16, 20, 14, 0.45);
+  }
+
+  .fix-row { display: flex; align-items: stretch; }
+
+  .fix-arrow {
+    flex: 0 0 52px;
+    border: 0;
+    background: var(--club);
+    color: var(--acid);
+    font-size: 22px;
+    cursor: pointer;
+    transition: background-color .2s;
+  }
+  .fix-arrow:hover { background: #1c2417; }
+
+  .fix-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    flex: 1;
+  }
+  .fix-track::-webkit-scrollbar { display: none; }
+
+  .fix {
+    flex: 0 0 33.333%;
+    min-width: 260px;
+    padding: 20px 18px;
+    text-align: center;
+    border-right: 1px solid var(--line);
+  }
+  .fix:last-child { border-right: 0; }
+  .fix p { font-family: var(--cond); font-weight: 700; font-size: 15px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .fix-teams { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 10px; }
+  .fix-teams b { font-size: clamp(26px, 3vw, 34px); font-weight: 800; letter-spacing: -0.02em; }
+  .fix-teams b.win { color: var(--acid-ink); }
+  .badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: var(--cond);
+    font-weight: 700;
+    font-size: 15px;
+    color: #fff;
+    background: var(--club);
+    border: 2px solid var(--acid);
+    flex-shrink: 0;
+  }
+  .badge.rival { background: var(--muted); border-color: #c9ced8; }
+  .fix small { display: block; margin-top: 8px; color: var(--muted); font-size: 14px; }
+
+  /* ——— Sections ——— */
+  section { padding: 72px 0; }
+  .sec-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 30px; }
+  .sec-head h2 { font-size: clamp(28px, 3.6vw, 42px); }
+  .sec-head h2::after { content: ''; display: block; width: 64px; height: 5px; background: var(--acid); margin-top: 12px; }
+  .sec-head p { color: var(--muted); max-width: 40ch; }
+
+  /* ——— Squad list ——— */
+  .roster { display: grid; gap: 30px; }
+
+  .roster h3 {
+    font-family: var(--cond);
+    font-size: 24px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding-bottom: 8px;
+    border-bottom: 3px solid var(--acid);
+  }
+
+  .roster ul { list-style: none; margin: 0; padding: 0; }
+
+  .roster li {
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr) repeat(3, 84px);
+    align-items: center;
+    gap: 12px;
+    padding: 11px 6px;
+    border-bottom: 1px solid var(--line);
+  }
+  .roster li:nth-child(odd) { background: #fafbfd; }
+
+  .roster .num {
+    font-family: var(--cond);
+    font-weight: 700;
+    font-size: 19px;
+    text-align: center;
+    color: var(--acid-ink);
+  }
+  .roster .name { font-weight: 700; }
+  .roster .val { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+  .roster .val b { color: var(--ink); }
+
+  .roster .head {
+    background: none !important;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--cond);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-bottom: 6px;
+  }
+
+  .roster .staff li { grid-template-columns: minmax(0, 1fr) auto; }
+  .roster .staff .role { font-family: var(--cond); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+
+  @media (max-width: 700px) {
+    .roster li { grid-template-columns: 38px minmax(0, 1fr) 62px; }
+    .roster li .val:nth-last-child(-n+2) { display: none; }
+    .roster .head span:nth-last-child(-n+2) { display: none; }
+  }
+
+  /* ——— Table ——— */
+  .table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; background: var(--paper); }
+  .table th {
+    background: var(--club);
+    color: #fff;
+    font-family: var(--cond);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: right;
+    padding: 12px 10px;
+  }
+  .table th:nth-child(2) { text-align: left; }
+  .table td { padding: 12px 10px; border-bottom: 1px solid var(--line); text-align: right; }
+  .table td:nth-child(2) { text-align: left; font-weight: 600; }
+  .table tbody tr:nth-child(odd) { background: #fafbfd; }
+  .table tr.us { background: rgba(214, 255, 63, 0.3) !important; }
+  .table tr.us td { font-weight: 800; }
+
+  /* ——— Training ——— */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; }
+  .card { background: var(--paper); border: 1px solid var(--line); border-top: 5px solid var(--acid); border-radius: 4px; padding: 24px; }
+  .card h3 { font-size: 22px; }
+  .card p { margin-top: 8px; color: var(--muted); font-size: 15px; }
+  .card ul { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; font-family: var(--cond); font-weight: 700; font-size: 18px; }
+  .card li { display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px dashed var(--line); padding-bottom: 6px; }
+  .card li b { color: var(--acid-ink); }
+
+  /* ——— Join ——— */
+  .join { background: var(--acid); padding: clamp(28px, 5vw, 54px); border-radius: 4px; }
+  .join h2 { font-size: clamp(28px, 4vw, 44px); max-width: 18ch; }
+  .join p { margin-top: 12px; max-width: 48ch; font-weight: 500; }
+  .join .btn { margin-top: 22px; background: var(--club); color: var(--acid); }
+
+  /* ——— Footer ——— */
+  footer { background: var(--club); color: #b9c2b2; }
+  .foot-in { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; padding: 26px 0 34px; font-size: 15px; }
+  .foot-in b { color: #fff; font-size: 19px; }
+
+  @media (max-width: 980px) {
+    .cards { grid-template-columns: 1fr; }
+    .fix { flex-basis: 50%; }
+  }
+
+  @media (max-width: 760px) {
+    .nav-in { grid-template-columns: 1fr; justify-items: center; padding-top: 86px; min-height: 0; padding-bottom: 12px; gap: 6px; }
+    .nav-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+    .nav-links.right { justify-content: center; }
+    .crest-slot { display: none; }
+    .crest svg { width: 92px; height: 110px; }
+    .hero-in { padding: 44px 0 100px; }
+    .fixtures { margin-top: -56px; }
+    .fix { flex-basis: 100%; }
+    section { padding: 52px 0; }
+    .sec-head { flex-direction: column; align-items: start; }
+  }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } html, .fix-track { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="stripe" aria-hidden="true"><i></i><i></i><i></i></div>
+
+  <nav class="nav" id="top">
+    <a class="crest" href="#top" aria-label="FK Vlčí Důl – úvod">
+      <svg viewBox="0 0 124 148" role="img">
+        <path d="M62 2 L120 20 V76 C120 110 96 133 62 146 C28 133 4 110 4 76 V20 Z" fill="#d6ff3f"/>
+        <path d="M62 9 L113 25 V76 C113 105 92 126 62 138 C32 126 11 105 11 76 V25 Z" fill="#10140e"/>
+        <path d="M62 15 L107 29 V76 C107 101 89 120 62 131 C35 120 17 101 17 76 V29 Z" fill="none" stroke="#d6ff3f" stroke-width="1.6"/>
+        <path d="M62 9 L113 25 V42 H11 V25 Z" fill="#d6ff3f"/>
+        <text x="62" y="36" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="16" letter-spacing="1.2" fill="#10140e">FK VLČÍ DŮL</text>
+        <g stroke="#d6ff3f" stroke-width="4.5" stroke-linecap="round">
+          <path d="M44 58 L80 92"/>
+          <path d="M80 58 L44 92"/>
+        </g>
+        <path d="M40 54 q9 -2 9 7 q-9 2 -9 -7 Z" fill="#d6ff3f"/>
+        <path d="M84 54 q-9 -2 -9 7 q9 2 9 -7 Z" fill="#d6ff3f"/>
+        <circle cx="62" cy="74" r="17" fill="#ffffff" stroke="#10140e" stroke-width="1.6"/>
+        <path d="M62 65 l7.6 5.5 -2.9 9h-9.4l-2.9 -9 Z" fill="#10140e"/>
+        <g stroke="#10140e" stroke-width="1.6" fill="none" stroke-linecap="round">
+          <path d="M62 65 V58"/>
+          <path d="M54.4 70.5 L47.5 66.5"/>
+          <path d="M69.6 70.5 L76.5 66.5"/>
+          <path d="M57.3 79.5 L54 87"/>
+          <path d="M66.7 79.5 L70 87"/>
+        </g>
+        <path d="M24 100 H100 L93 110 L100 120 H24 L31 110 Z" fill="#d6ff3f"/>
+        <text x="62" y="114" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="14" letter-spacing="2.5" fill="#10140e">1924</text>
+      </svg>
+    </a>
+
+    <div class="wrap nav-in">
+      <ul class="nav-links">
+        <li><a href="vlcidul-soupiska.html">Muži A</a></li>
+        <li><a href="#tabulka">Tabulka</a></li>
+        <li><a href="#treninky">Mládež</a></li>
+      </ul>
+      <div class="crest-slot" aria-hidden="true"></div>
+      <ul class="nav-links right">
+        <li><a href="#zapasy">Zápasy</a></li>
+        <li><a href="#pridej-se">Nábor</a></li>
+        <li><a href="#kontakt">Klub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap hero-in">
+      <div>
+        <p class="kicker" id="heroDate">Neděle 16:00 | Krajský přebor</p>
+        <h1>Doma proti Bystřeci. Přijďte nám pomoct k dalším třem bodům.</h1>
+        <div class="hero-cta">
+          <a class="btn btn-yellow" href="#zapasy">Program zápasů</a>
+          <a class="btn btn-ghost" href="#pridej-se">Chci hrát za Vlčí Důl</a>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <section class="fixtures" id="zapasy" style="padding:0">
+    <div class="fix-row">
+      <button class="fix-arrow" type="button" id="fixPrev" aria-label="Předchozí zápasy">‹</button>
+      <div class="fix-track" id="fixTrack">
+        <article class="fix">
+          <p>10. kolo | 6. 9. | Muži A</p>
+          <div class="fix-teams">
+            <span class="badge">VD</span>
+            <b class="win">3</b><b>:</b><b>1</b>
+            <span class="badge rival">MLB</span>
+          </div>
+          <small>Vlčí Důl – Mladé Buky</small>
+        </article>
+        <article class="fix">
+          <p>11. kolo | 13. 9. | Muži A</p>
+          <div class="fix-teams">
+            <span class="badge rival">JAV</span>
+            <b>1</b><b>:</b><b class="win">3</b>
+            <span class="badge">VD</span>
+          </div>
+          <small>Javorník – Vlčí Důl</small>
+        </article>
+        <article class="fix">
+          <p>12. kolo | 20. 9. | Muži A</p>
+          <div class="fix-teams">
+            <span class="badge">VD</span>
+            <b class="win">2</b><b>:</b><b>0</b>
+            <span class="badge rival">STR</span>
+          </div>
+          <small>Vlčí Důl – Struhy</small>
+        </article>
+        <article class="fix">
+          <p>13. kolo | neděle | Muži A</p>
+          <div class="fix-teams">
+            <span class="badge">VD</span>
+            <b id="fixTime">16:00</b>
+            <span class="badge rival">BYS</span>
+          </div>
+          <small id="fixCountdown">Vlčí Důl – Bystřec</small>
+        </article>
+        <article class="fix">
+          <p>14. kolo | 4. 10. | Muži A</p>
+          <div class="fix-teams">
+            <span class="badge rival">LOM</span>
+            <b>15:30</b>
+            <span class="badge">VD</span>
+          </div>
+          <small>Lomnice B – Vlčí Důl</small>
+        </article>
+        <article class="fix">
+          <p>15. kolo | 11. 10. | Muži A</p>
+          <div class="fix-teams">
+            <span class="badge">VD</span>
+            <b>15:30</b>
+            <span class="badge rival">PAŘ</span>
+          </div>
+          <small>Vlčí Důl – Sokol Pařezov</small>
+        </article>
+      </div>
+      <button class="fix-arrow" type="button" id="fixNext" aria-label="Další zápasy">›</button>
+    </div>
+  </section>
+
+  <section id="tabulka">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><h2>Tabulka po 12. kole</h2></div>
+        <p>Krajský přebor, skupina B. Cílem podzimu je první čtyřka.</p>
+      </div>
+
+      <table class="table">
+        <thead>
+          <tr><th>#</th><th>Tým</th><th>Z</th><th>V</th><th>R</th><th>P</th><th>Skóre</th><th>B</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1.</td><td>Bystřec</td><td>12</td><td>9</td><td>2</td><td>1</td><td>30:12</td><td>29</td></tr>
+          <tr><td>2.</td><td>Horní Ves</td><td>12</td><td>8</td><td>2</td><td>2</td><td>26:15</td><td>26</td></tr>
+          <tr class="us"><td>3.</td><td>FK Vlčí Důl</td><td>12</td><td>7</td><td>3</td><td>2</td><td>25:13</td><td>24</td></tr>
+          <tr><td>4.</td><td>Sokol Pařezov</td><td>12</td><td>6</td><td>3</td><td>3</td><td>20:16</td><td>21</td></tr>
+          <tr><td>5.</td><td>Lomnice B</td><td>12</td><td>5</td><td>3</td><td>4</td><td>18:18</td><td>18</td></tr>
+          <tr><td>6.</td><td>Javorník</td><td>12</td><td>4</td><td>2</td><td>6</td><td>16:22</td><td>14</td></tr>
+          <tr><td>7.</td><td>Mladé Buky</td><td>12</td><td>3</td><td>2</td><td>7</td><td>14:24</td><td>11</td></tr>
+          <tr><td>8.</td><td>Struhy</td><td>12</td><td>1</td><td>1</td><td>10</td><td>9:38</td><td>4</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="treninky" style="background:var(--grey);border-block:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><h2>Tréninky mužstev</h2></div>
+        <p>Trénujeme na hřišti Na Stráni, v zimě na umělce.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <h3>Přípravka</h3>
+          <p>Děti 6–10 let. Hraje se, běhá se, nekřičí se.</p>
+          <ul>
+            <li>Úterý <b>16:00</b></li>
+            <li>Čtvrtek <b>16:00</b></li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Žáci</h3>
+          <p>Od 11 do 14 let. První velké hřiště a první soutěž.</p>
+          <ul>
+            <li>Pondělí <b>17:00</b></li>
+            <li>Středa <b>17:00</b></li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Dorost</h3>
+          <p>Od 15 do 18 let. Kdo chce, přidá se k tréninku mužů.</p>
+          <ul>
+            <li>Středa <b>19:00</b></li>
+            <li>Pátek <b>17:00</b></li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Muži A a B</h3>
+          <p>Dospělí. V neděli zápas, v týdnu dvě tréninkové fáze.</p>
+          <ul>
+            <li>Úterý <b>18:30</b></li>
+            <li>Čtvrtek <b>18:30</b></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="pridej-se">
+    <div class="wrap">
+      <div class="join">
+        <p class="kicker" style="color:var(--ink)">Nábor je otevřený</p>
+        <h2>Přijďte si zakopat, dres máme</h2>
+        <p>
+          Bereme děti od šesti let i dospělé, kteří s fotbalem kdysi přestali.
+          Stačí přijít na trénink v kopačkách, zbytek vyřešíme na místě.
+        </p>
+        <a class="btn" href="#treninky">Kdy se trénuje</a>
+      </div>
+    </div>
+  </section>
+
+  <footer id="kontakt">
+    <div class="wrap foot-in">
+      <span><b>FK Vlčí Důl</b><br>Hřiště Na Stráni · založeno 1924</span>
+      <span>Tři mužstva · 212 členů · krajský přebor, skupina B</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // ——— Fixtures carousel ———
+  const track = document.getElementById('fixTrack');
+  const step = () => track.querySelector('.fix').getBoundingClientRect().width;
+  document.getElementById('fixPrev').addEventListener('click', () => track.scrollBy({ left: -step() }));
+  document.getElementById('fixNext').addEventListener('click', () => track.scrollBy({ left: step() }));
+
+  // ——— Next Sunday kick-off, counted live ———
+  const DAYS = ['neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota'];
+
+  function nextKickoff() {
+    const now = new Date();
+    const d = new Date(now);
+    d.setHours(16, 0, 0, 0);
+    d.setDate(d.getDate() + ((7 - d.getDay()) % 7));
+    if (d <= now) d.setDate(d.getDate() + 7);
+    return d;
+  }
+
+  function tick() {
+    const target = nextKickoff();
+    const s = Math.max(0, Math.floor((target - new Date()) / 1000));
+    const dd = Math.floor(s / 86400);
+    const hh = Math.floor(s / 3600) % 24;
+    const mm = Math.floor(s / 60) % 60;
+    document.getElementById('fixCountdown').textContent =
+      `Vlčí Důl – Bystřec · výkop za ${dd} d ${hh} h ${mm} min`;
+    document.getElementById('heroDate').textContent =
+      `${DAYS[target.getDay()].replace(/^./, (c) => c.toUpperCase())} ${target.getDate()}. ${target.getMonth() + 1}. v 16:00 | Krajský přebor`;
+  }
+
+  tick();
+  setInterval(tick, 30000);
+</script>
+</body>
+</html>

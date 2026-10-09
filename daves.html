@@ -1,0 +1,576 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dave's Barber Shop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Figtree:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+
+<style>
+  /* Dave's Barber Shop — the barber pole's three colours: red, white, blue. Pole caps become the navy ink. */
+  :root {
+    --white:  #ffffff;
+    --paper:  #f5f6f9;
+    --red:    #d62839;
+    --red-d:  #ad1f2d;
+    --blue:   #2f5da8;
+    --blue-d: #234a8a;
+    --ink:    #141a2e;
+    --ink-2:  #4a5270;
+    --rule:   #dfe3ec;
+
+    --stripes: repeating-linear-gradient(135deg, var(--red) 0 22px, var(--white) 22px 44px, var(--blue) 44px 66px, var(--white) 66px 88px);
+
+    --display: 'Alfa Slab One', 'Rockwell', 'Georgia', serif;
+    --body: 'Figtree', 'Helvetica Neue', Arial, sans-serif;
+    --mono: 'DM Mono', Consolas, 'Courier New', monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--white);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--display);
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: 0.005em;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  p { margin: 0; }
+  a { color: var(--blue); }
+
+  :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+  .wrap { max-width: 1180px; margin-inline: auto; padding-inline: 28px; }
+
+  .label {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+
+  .stripe-band { height: 12px; background: var(--stripes); }
+
+  /* ——— Nav ——— */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .nav-in { display: flex; align-items: center; gap: 30px; min-height: 66px; }
+
+  .mark {
+    margin-right: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--display);
+    font-size: 24px;
+    line-height: 1;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+
+  .mini-pole {
+    --cap: var(--ink);
+    position: relative;
+    flex-shrink: 0;
+    width: 12px;
+    height: 26px;
+    margin-block: 11px 6px;
+    border-left: 1.5px solid var(--cap);
+    border-right: 1.5px solid var(--cap);
+    background: repeating-linear-gradient(135deg, var(--red) 0 3px, var(--white) 3px 6px, var(--blue) 6px 9px, var(--white) 9px 12px);
+  }
+
+  .mini-pole::before,
+  .mini-pole::after {
+    content: '';
+    position: absolute;
+    left: -4.5px;
+    right: -4.5px;
+    background: var(--cap);
+  }
+
+  /* Top cap with the chrome ball sitting on it */
+  .mini-pole::before {
+    top: -11px;
+    height: 11px;
+    background:
+      radial-gradient(circle at 50% 3px, #f4f5f8 0 1.2px, #b9bdc7 2.2px 3.2px, transparent 3.7px),
+      linear-gradient(var(--cap), var(--cap)) bottom / 100% 5px no-repeat;
+    border-radius: 0 0 1px 1px;
+  }
+
+  .mini-pole::after {
+    bottom: -5px;
+    height: 5px;
+    border-radius: 1px 1px 3px 3px;
+  }
+
+  footer .mini-pole { --cap: #e6e9f0; }
+
+  .nav-links { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; }
+
+  .nav-links a {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink-2);
+    text-decoration: none;
+    padding-block: 6px;
+    border-bottom: 3px solid transparent;
+  }
+
+  .nav-links a:hover { color: var(--ink); border-bottom-color: var(--red); }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 24px;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background .15s, color .15s, border-color .15s, transform .15s;
+  }
+
+  .btn:hover { transform: translateY(-2px); }
+  .btn-red { background: var(--red); color: var(--white); }
+  .btn-red:hover { background: var(--red-d); }
+  .btn-outline { border-color: var(--ink); color: var(--ink); }
+  .btn-outline:hover { background: var(--ink); color: var(--white); }
+
+  /* ——— Hero ——— */
+  .hero { padding: 64px 0 72px; }
+
+  .hero-in {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .hero h1 { font-size: clamp(52px, 7.6vw, 108px); }
+  .hero h1 em { font-style: normal; color: var(--red); }
+
+  .lede { margin-top: 28px; font-size: clamp(18px, 1.8vw, 21px); color: var(--ink-2); max-width: 42ch; }
+  .lede strong { color: var(--ink); font-weight: 700; }
+
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+
+  /* The barber pole */
+  .pole-wrap { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+
+  .pole { display: flex; flex-direction: column; align-items: center; }
+
+  .pole-ball {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 34% 30%, #ffffff 0%, #d7dae2 38%, #8a909c 100%);
+    box-shadow: inset -4px -6px 10px rgba(0, 0, 0, 0.18);
+    margin-bottom: -8px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .pole-cap {
+    width: 128px;
+    height: 38px;
+    background: var(--ink);
+    box-shadow: inset 0 -5px 0 rgba(255, 255, 255, 0.08), inset 0 5px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  .pole-cap.top { border-radius: 18px 18px 6px 6px; }
+  .pole-cap.bottom { border-radius: 6px 6px 18px 18px; }
+
+  .pole-glass {
+    position: relative;
+    width: 100px;
+    height: 400px;
+    overflow: hidden;
+    border-left: 3px solid var(--ink);
+    border-right: 3px solid var(--ink);
+    --period: calc(88px * 1.41421);
+  }
+
+  .pole-stripes {
+    position: absolute;
+    inset: 0;
+    background: var(--stripes);
+    background-size: 100% var(--period);
+    animation: pole-spin 2.4s linear infinite;
+  }
+
+  .pole-glass::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(20, 26, 46, 0.28) 0%, rgba(255, 255, 255, 0.45) 26%, rgba(255, 255, 255, 0) 52%, rgba(20, 26, 46, 0.22) 100%);
+  }
+
+  .pole.is-off .pole-stripes { animation-play-state: paused; }
+
+  @keyframes pole-spin {
+    from { background-position: 0 0; }
+    to   { background-position: 0 calc(-1 * var(--period)); }
+  }
+
+
+  /* ——— Sections ——— */
+  section { padding: 96px 0; }
+
+  .sec-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 40px;
+    align-items: end;
+    margin-bottom: 36px;
+  }
+
+  .sec-head h2 { font-size: clamp(44px, 5.6vw, 76px); line-height: 1.14; margin-top: 12px; }
+  .sec-head h2 em { font-style: normal; color: var(--red); }
+  .sec-head > p { color: var(--ink-2); max-width: 44ch; justify-self: end; }
+
+  /* Price list */
+  .prices { list-style: none; margin: 0; padding: 0; border-top: 3px solid var(--ink); }
+
+  .prices li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 28px;
+    align-items: baseline;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .prices h3 { font-size: clamp(26px, 2.6vw, 34px); }
+  .prices p { color: var(--ink-2); font-size: 15px; margin-top: 8px; max-width: 56ch; }
+  .prices .time { font-family: var(--mono); font-size: 13px; color: var(--blue); white-space: nowrap; }
+
+  .prices .pr {
+    font-family: var(--display);
+    font-size: clamp(34px, 3.4vw, 46px);
+    line-height: 0.9;
+    color: var(--red);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .prices .pr small { font-family: var(--mono); font-size: 13px; margin-left: 5px; color: var(--ink-2); }
+
+  .price-note { margin-top: 18px; font-size: 14px; color: var(--ink-2); }
+
+  /* How it works */
+  .how { background: var(--blue); color: var(--white); }
+  .how .label { color: #cfdcf3; }
+  .how .sec-head > p { color: #dbe5f7; }
+  .how .sec-head h2 em { color: var(--white); text-decoration: underline; text-decoration-color: var(--red); text-decoration-thickness: 6px; text-underline-offset: 8px; }
+
+  .ways { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+
+  .way {
+    padding: 34px 32px 32px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 22px;
+    background: var(--blue-d);
+  }
+
+  .way h3 { font-size: clamp(34px, 3.6vw, 48px); margin: 12px 0 16px; }
+  .way p { color: #dbe5f7; max-width: 40ch; }
+  .way .btn { margin-top: 26px; }
+  .way .btn-light { background: var(--white); color: var(--blue-d); }
+  .way .btn-light:hover { background: var(--paper); }
+
+  /* Week schedule drawn to a shared 8–20 h scale */
+  .week { margin: 0; }
+
+  .week-head { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+
+  .week-chart {
+    display: grid;
+    grid-template-columns: 52px repeat(7, minmax(0, 1fr));
+    grid-template-rows: auto 280px auto;
+    column-gap: 10px;
+  }
+
+  .grid-lines {
+    grid-column: 2 / -1;
+    grid-row: 2;
+    border-top: 1px solid var(--rule);
+    border-bottom: 3px solid var(--ink);
+    background: repeating-linear-gradient(to bottom, transparent 0 calc(100% / 6 - 1px), var(--rule) calc(100% / 6 - 1px) calc(100% / 6));
+  }
+
+  .axis { grid-column: 1; grid-row: 2; position: relative; }
+
+  .axis span {
+    position: absolute;
+    right: 8px;
+    top: calc((var(--h) - 8) / 12 * 100%);
+    transform: translateY(-50%);
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-2);
+  }
+
+  .day { display: contents; }
+  .day > * { grid-column: var(--col); }
+
+  .day-name { grid-row: 1; padding-bottom: 10px; font-family: var(--display); font-size: 24px; line-height: 1; text-align: center; }
+
+  .day-track { grid-row: 2; position: relative; }
+
+  .day-bar {
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    top: calc((var(--o) - 8) / 12 * 100%);
+    height: calc((var(--c) - var(--o)) / 12 * 100%);
+    border-radius: 10px;
+    background: var(--blue);
+  }
+
+  .day-time { grid-row: 3; padding-top: 10px; font-family: var(--mono); font-size: 13px; text-align: center; color: var(--ink-2); white-space: nowrap; }
+  .day-time .short { display: none; }
+
+  .day.today .day-name { color: var(--red); }
+  .day.today .day-bar { background: var(--stripes); background-size: 100% calc(88px * 1.41421); }
+  .day.today .day-time { color: var(--ink); font-weight: 500; }
+
+  .now-line { grid-column: 2 / -1; grid-row: 2; position: relative; pointer-events: none; }
+  .now-line[hidden] { display: none; }
+  .now-line i { position: absolute; left: 0; right: 0; top: var(--t); border-top: 2px dashed var(--red); }
+  .now-line span { position: absolute; right: 0; top: var(--t); transform: translateY(-120%); font-family: var(--mono); font-size: 12px; color: var(--white); background: var(--red); padding: 2px 8px; border-radius: 999px; }
+
+  /* Footer */
+  footer { background: var(--ink); color: #c3c8d8; }
+  .foot-in { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 30px; padding-block: 30px 36px; font-size: 14px; }
+  footer .mark { margin: 0; color: var(--white); font-size: 22px; }
+
+  /* ——— Responsive ——— */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hero-in, .sec-head { grid-template-columns: 1fr; }
+    .sec-head > p { justify-self: start; }
+    .pole-glass { height: 260px; width: 84px; }
+    .pole-cap { width: 110px; }
+    .ways { grid-template-columns: 1fr; }
+    .day-time .long { display: none; }
+    .day-time .short { display: inline; }
+  }
+
+  @media (max-width: 600px) {
+    section { padding: 68px 0; }
+    .wrap { padding-inline: 20px; }
+    .prices li { grid-template-columns: minmax(0, 1fr) auto; }
+    .prices .time { grid-column: 1; grid-row: 2; }
+    .week-chart { grid-template-columns: 34px repeat(7, minmax(0, 1fr)); column-gap: 4px; grid-template-rows: auto 220px auto; }
+    .day-name { font-size: 17px; }
+    .day-time { font-size: 10px; }
+    .axis span { right: 5px; font-size: 10px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+    .pole-stripes { animation: none; }
+  }
+</style>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="mark" href="#top" aria-label="Dave's Barber Shop"><i class="mini-pole" aria-hidden="true"></i><span class="mark-text">Dave<span>’</span>s Barber Shop</span></a>
+    <ul class="nav-links">
+      <li><a href="#cenik">Ceník</a></li>
+      <li><a href="#jak">Jak to chodí</a></li>
+      <li><a href="#kontakt">Otevírací doba</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-in">
+    <div>
+      <h1>Střih, fade<br>a vousy.<br><em>Každý&nbsp;den.</em></h1>
+      <p class="lede">
+        Barber shop, kam můžete přijít <strong>rovnou bez objednání</strong>,
+        nebo si termín zamluvit předem. Střih, fade i úprava vousů.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-red" href="#cenik">Prohlédnout ceník</a>
+        <a class="btn btn-outline" href="#kontakt">Otevírací doba</a>
+      </div>
+    </div>
+
+    <div class="pole-wrap">
+      <div class="pole" id="pole" role="img" aria-label="Holičská tyč v červené, bílé a modré">
+        <div class="pole-ball"></div>
+        <div class="pole-cap top"></div>
+        <div class="pole-glass"><div class="pole-stripes"></div></div>
+        <div class="pole-cap bottom"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="stripe-band" aria-hidden="true"></div>
+
+<section id="cenik">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="label">Ceník</p>
+        <h2>Co pro vás <em>uděláme</em></h2>
+      </div>
+      <p>Každý střih začíná krátkou domluvou. Řekněte, co chcete, a barber navrhne, co vám bude sedět.</p>
+    </div>
+
+    <ul class="prices">
+      <li>
+        <div><h3>Pánský střih</h3><p>Střih nůžkami i strojkem, mytí a styling.</p></div>
+        <span class="time">cca 40 min</span>
+        <span class="pr">390<small>Kč</small></span>
+      </li>
+      <li>
+        <div><h3>Skin fade</h3><p>Přechod až do kůže, čisté kontury a styling.</p></div>
+        <span class="time">cca 50 min</span>
+        <span class="pr">450<small>Kč</small></span>
+      </li>
+      <li>
+        <div><h3>Úprava vousů</h3><p>Zkrácení, tvarování a kontury břitvou.</p></div>
+        <span class="time">cca 30 min</span>
+        <span class="pr">290<small>Kč</small></span>
+      </li>
+      <li>
+        <div><h3>Střih + vousy</h3><p>Kompletní úprava: střih nebo fade a vousy.</p></div>
+        <span class="time">cca 70 min</span>
+        <span class="pr">640<small>Kč</small></span>
+      </li>
+    </ul>
+    <p class="price-note">Ceny jsou orientační. Přesnou cenu vám řekneme ještě před střihem.</p>
+  </div>
+</section>
+
+<div class="stripe-band" aria-hidden="true"></div>
+
+<section class="how" id="jak">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="label">Jak to chodí</p>
+        <h2>Walk in, nebo <em>termín</em></h2>
+      </div>
+      <p>Otevřeno máme každý den v týdnu. Vyberte si, co vám víc vyhovuje.</p>
+    </div>
+
+    <div class="ways">
+      <div class="way">
+        <p class="label">Bez objednání</p>
+        <h3>Přijďte rovnou</h3>
+        <p>Stačí přijít v otevírací době. Když je volno, jdete hned na řadu, jinak chvíli počkáte.</p>
+        <a class="btn btn-red" href="#kontakt">Kdy máme otevřeno</a>
+      </div>
+      <div class="way">
+        <p class="label">S rezervací</p>
+        <h3>Zamluvte si čas</h3>
+        <p>Domluvte si termín předem a přijďte přesně na svůj čas, bez čekání.</p>
+        <a class="btn btn-light" href="#cenik">Zobrazit ceník</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stripe-band" aria-hidden="true"></div>
+
+<section id="kontakt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="label">Otevírací doba</p>
+        <h2>Stavte se na <em>střih</em></h2>
+      </div>
+      <p>Otevřeno máme sedm dní v týdnu, i o víkendu.</p>
+    </div>
+
+    <figure class="week" aria-label="Otevírací doba: pondělí až pátek 10:00–19:00, sobota a neděle 10:00–16:00">
+      <figcaption class="week-head">
+        <span class="label">Každý den</span>
+        <span class="label">Časová osa 8:00–20:00</span>
+      </figcaption>
+      <div class="week-chart">
+        <div class="grid-lines"></div>
+        <div class="axis" aria-hidden="true">
+          <span style="--h:8">8</span><span style="--h:10">10</span><span style="--h:12">12</span><span style="--h:14">14</span><span style="--h:16">16</span><span style="--h:18">18</span><span style="--h:20">20</span>
+        </div>
+
+        <div class="day" data-day="1" style="--col:2; --o:10; --c:19"><span class="day-name">Po</span><div class="day-track"><div class="day-bar"></div></div><span class="day-time"><span class="long">10:00–19:00</span><span class="short">10–19</span></span></div>
+        <div class="day" data-day="2" style="--col:3; --o:10; --c:19"><span class="day-name">Út</span><div class="day-track"><div class="day-bar"></div></div><span class="day-time"><span class="long">10:00–19:00</span><span class="short">10–19</span></span></div>
+        <div class="day" data-day="3" style="--col:4; --o:10; --c:19"><span class="day-name">St</span><div class="day-track"><div class="day-bar"></div></div><span class="day-time"><span class="long">10:00–19:00</span><span class="short">10–19</span></span></div>
+        <div class="day" data-day="4" style="--col:5; --o:10; --c:19"><span class="day-name">Čt</span><div class="day-track"><div class="day-bar"></div></div><span class="day-time"><span class="long">10:00–19:00</span><span class="short">10–19</span></span></div>
+        <div class="day" data-day="5" style="--col:6; --o:10; --c:19"><span class="day-name">Pá</span><div class="day-track"><div class="day-bar"></div></div><span class="day-time"><span class="long">10:00–19:00</span><span class="short">10–19</span></span></div>
+        <div class="day" data-day="6" style="--col:7; --o:10; --c:16"><span class="day-name">So</span><div class="day-track"><div class="day-bar"></div></div><span class="day-time"><span class="long">10:00–16:00</span><span class="short">10–16</span></span></div>
+        <div class="day" data-day="0" style="--col:8; --o:10; --c:16"><span class="day-name">Ne</span><div class="day-track"><div class="day-bar"></div></div><span class="day-time"><span class="long">10:00–16:00</span><span class="short">10–16</span></span></div>
+
+        <div class="now-line" id="now-line" hidden><i></i><span></span></div>
+      </div>
+    </figure>
+  </div>
+</section>
+
+<footer>
+  <div class="stripe-band" aria-hidden="true"></div>
+  <div class="wrap foot-in">
+    <a class="mark" href="#top" aria-label="Dave's Barber Shop"><i class="mini-pole" aria-hidden="true"></i><span class="mark-text">Dave<span>’</span>s Barber Shop</span></a>
+    <span>Barber shop · střih, fade a vousy</span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var HOURS = { 0: [10, 16], 1: [10, 19], 2: [10, 19], 3: [10, 19], 4: [10, 19], 5: [10, 19], 6: [10, 16] };
+    var DAYS = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+    var parts = {};
+    new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Prague', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
+      .formatToParts(new Date())
+      .forEach(function (p) { parts[p.type] = p.value; });
+
+    var day = DAYS[parts.weekday];
+    var now = Number(parts.hour) + Number(parts.minute) / 60;
+    var today = HOURS[day];
+    var open = now >= today[0] && now < today[1];
+
+    // Like a real shop: the pole spins only while we're open.
+    document.getElementById('pole').classList.toggle('is-off', !open);
+
+    var col = document.querySelector('.week .day[data-day="' + day + '"]');
+    if (col) { col.classList.add('today'); }
+
+    var line = document.getElementById('now-line');
+    if (now >= 8 && now <= 20) {
+      line.style.setProperty('--t', ((now - 8) / 12 * 100) + '%');
+      line.querySelector('span').textContent = 'teď ' + Number(parts.hour) + ':' + parts.minute;
+      line.hidden = false;
+    }
+  })();
+</script>

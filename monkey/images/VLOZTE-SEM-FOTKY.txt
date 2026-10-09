@@ -1,0 +1,12 @@
+Sem vložte vlastní fotky kavárny (JPG). Web je automaticky zobrazí místo ilustrací:
+
+  logo.jpg          – logo v hlavičce (čtvercové)
+  hero.jpg          – hlavní fotka nahoře (čtvercová, např. latte art)
+  pekarna-1.jpg     – sekce Pekárna (2 fotky na výšku)
+  pekarna-2.jpg
+  galerie-1.jpg     – sekce Galerie (6 fotek)
+  ...
+  galerie-6.jpg
+
+Když fotka chybí, zobrazí se místo ní barevná dlaždice s ikonou.
+Ceny v menu doplňte v index.html do prázdných <span class="price"></span>.

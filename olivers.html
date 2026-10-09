@@ -1,0 +1,651 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oliver's Café</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Instrument+Sans:wght@400;500;600&family=Martian+Mono:wght@400;500&display=swap">
+
+<style>
+  /* Oliver's Café — the page is the café's day: 8:00 → 16:00. The hero takes the colour of the real Prague hour. */
+  :root {
+    --night:     #1f2346;
+    --night-ink: #f7efe2;
+    --dawn:      #ffcfae;
+    --morning:   #ffe07a;
+    --noon:      #fff1bf;
+    --afternoon: #ffb061;
+    --ink:       #251a13;
+    --ink-soft:  #5a4638;
+    --sun:       #f2511b;
+
+    --hero-bg:  var(--morning);
+    --hero-ink: var(--ink);
+    --cup-line: var(--ink);
+
+    --display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+    --body: 'Instrument Sans', 'Helvetica Neue', Arial, sans-serif;
+    --mono: 'Martian Mono', Consolas, 'Courier New', monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--night);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 18px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-variation-settings: 'wdth' 80;
+    letter-spacing: -0.035em;
+    line-height: 0.88;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  p { margin: 0; }
+
+  :focus-visible { outline: 3px solid currentColor; outline-offset: 4px; }
+
+  .wrap { max-width: 1240px; margin-inline: auto; padding-inline: 32px; }
+
+  .mono {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ——— Hero: live day dial ——— */
+  .hero {
+    background: var(--hero-bg);
+    color: var(--hero-ink);
+    transition: background-color 1.2s ease, color 1.2s ease;
+    padding-bottom: 44px;
+  }
+
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 16px 28px;
+    flex-wrap: wrap;
+    padding-block: 22px;
+  }
+
+  .wordmark {
+    margin-right: auto;
+    font-family: var(--display);
+    font-weight: 800;
+    font-variation-settings: 'wdth' 80;
+    font-size: 26px;
+    letter-spacing: -0.03em;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .dial { position: relative; margin-top: 34px; container-type: inline-size; }
+
+  .dial svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+  .cup { fill: none; stroke: var(--cup-line); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+  .steam    { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; opacity: 0; animation: steam 3.6s ease-in-out infinite; }
+  .hero.is-closed .steam { display: none; }
+
+  @keyframes steam {
+    0%   { opacity: 0;    transform: translateY(14px); }
+    35%  { opacity: 0.7; }
+    100% { opacity: 0;    transform: translateY(-18px); }
+  }
+
+  .arc-future { fill: none; stroke: currentColor; stroke-width: 2.5; stroke-dasharray: 2 10; stroke-linecap: round; opacity: 0.55; }
+  .arc-past   { fill: none; stroke: currentColor; stroke-width: 3; }
+  .arc-tick   { fill: currentColor; }
+  .arc-label  { fill: currentColor; font-family: var(--mono); font-size: 19px; }
+  .sun        { fill: var(--sun); transition: cx 1s ease, cy 1s ease; }
+  .sun-halo   { fill: var(--sun); opacity: 0.18; transition: cx 1s ease, cy 1s ease; }
+
+  .clock {
+    position: absolute;
+    left: 50%;
+    bottom: 18%;
+    transform: translateX(-50%);
+    font-family: var(--display);
+    font-weight: 800;
+    font-variation-settings: 'wdth' 75, 'opsz' 96;
+    font-size: clamp(110px, 21vw, 290px);
+    font-size: 24cqi;
+    line-height: 0.8;
+    letter-spacing: -0.015em;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .hero-foot {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 28px 48px;
+    align-items: end;
+    margin-top: 28px;
+    padding-top: 26px;
+    border-top: 2px solid currentColor;
+  }
+
+  .state {
+    font-family: var(--display);
+    font-weight: 700;
+    font-variation-settings: 'wdth' 85;
+    font-size: clamp(30px, 3.6vw, 48px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .state small {
+    display: block;
+    margin-top: 12px;
+    font-family: var(--body);
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: 0;
+    line-height: 1.4;
+  }
+
+  .hero-side { display: flex; flex-direction: column; align-items: flex-end; gap: 16px; text-align: right; }
+
+  .cta { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
+
+  .btn {
+    display: inline-block;
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 16px;
+    padding: 13px 22px;
+    border-radius: 999px;
+    border: 2px solid currentColor;
+    color: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform .15s ease;
+  }
+
+  .btn:hover { transform: translateY(-2px); }
+  .btn-solid { background: var(--hero-ink); color: var(--hero-bg); border-color: var(--hero-ink); }
+
+  /* ——— The day, band by band ——— */
+  .band { padding: 104px 0; }
+
+  .band-in {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr);
+    gap: 40px 64px;
+    align-items: start;
+  }
+
+  .when { position: sticky; top: 32px; }
+
+  .when time {
+    display: block;
+    font-family: var(--display);
+    font-weight: 300;
+    font-variation-settings: 'wdth' 75, 'opsz' 96;
+    font-size: clamp(64px, 8vw, 116px);
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .when .part { display: block; margin-top: 14px; }
+
+  .ruler { position: relative; height: 14px; margin-top: 22px; max-width: 220px; }
+  .ruler::before { content: ''; position: absolute; left: 0; right: 0; top: 6px; border-top: 2px dotted currentColor; opacity: 0.5; }
+  .ruler i { position: absolute; top: 0; left: calc(var(--p) * 100%); width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; background: var(--sun); }
+  .ruler-ends { display: flex; justify-content: space-between; max-width: 220px; margin-top: 6px; font-size: 11px; opacity: 0.7; }
+
+  .band h2 { font-size: clamp(64px, 10.5vw, 168px); }
+
+  .band p.lead {
+    margin-top: 30px;
+    max-width: 34ch;
+    font-size: clamp(20px, 2vw, 25px);
+    line-height: 1.45;
+    color: var(--ink-soft);
+  }
+
+  .b-dawn      { background: var(--dawn); }
+  .b-morning   { background: var(--morning); }
+  .b-noon      { background: var(--noon); }
+  .b-afternoon { background: var(--afternoon); }
+  .b-close     { background: var(--night); color: var(--night-ink); padding-bottom: 56px; }
+  .b-close p.lead { color: #cfc6d9; }
+
+  /* Menu inside the day bands */
+  .menu { list-style: none; margin: 48px 0 0; padding: 0; border-top: 2.5px solid var(--ink); }
+
+  .menu li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 28px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(37, 26, 19, 0.28);
+  }
+
+  .dish {
+    font-family: var(--display);
+    font-weight: 700;
+    font-variation-settings: 'wdth' 85;
+    font-size: clamp(25px, 2.5vw, 33px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .desc { grid-column: 1; font-size: 16px; line-height: 1.5; color: var(--ink-soft); max-width: 54ch; }
+
+  .price {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: start;
+    font-family: var(--display);
+    font-weight: 800;
+    font-variation-settings: 'wdth' 75;
+    font-size: clamp(36px, 3.6vw, 50px);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .price small { font-family: var(--mono); font-size: 12px; font-weight: 400; letter-spacing: 0; margin-left: 5px; }
+
+  .variants { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; list-style: none; padding: 0; }
+  .variants span { font-family: var(--mono); font-size: 12px; padding: 5px 11px; border: 1.5px solid var(--ink); border-radius: 999px; }
+
+  .menu-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 56px;
+    padding-bottom: 14px;
+    border-bottom: 2.5px solid var(--ink);
+  }
+
+  .menu-head h3 {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 800;
+    font-variation-settings: 'wdth' 80;
+    font-size: clamp(34px, 3.4vw, 46px);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+  }
+
+  .smoothies {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .smoothie {
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    text-align: center;
+    border: 2px solid var(--ink);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.28);
+  }
+
+  .smoothie span { display: block; font-family: var(--mono); font-size: 12px; line-height: 1.55; }
+
+  .drinks { list-style: none; margin: 18px 0 0; padding: 0; }
+
+  .drinks li {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(37, 26, 19, 0.28);
+    font-size: 17px;
+  }
+
+  .drinks li span:first-child { flex: 1; }
+  .drinks .mono { font-size: 14px; white-space: nowrap; }
+
+  .sign {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px 30px;
+    margin-top: 88px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(247, 239, 226, 0.22);
+    opacity: 0.8;
+  }
+
+  /* ——— Responsive ——— */
+  @media (max-width: 860px) {
+    .hero-foot, .band-in { grid-template-columns: 1fr; }
+    .hero-side { align-items: flex-start; text-align: left; }
+    .cta { justify-content: flex-start; }
+    .when { position: static; }
+    .band { padding: 76px 0; }
+  }
+
+  @media (max-width: 1000px) {
+    .smoothies { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 520px) {
+    .wrap { padding-inline: 20px; }
+    .menu li { gap: 6px 16px; }
+    .drinks li { flex-wrap: wrap; gap: 2px 12px; }
+    .arc-label { font-size: 28px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero, .sun, .sun-halo, .btn { transition: none; }
+    .steam { animation: none; opacity: 0.5; }
+  }
+</style>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="top">
+      <a class="wordmark" href="#top">Oliver's Café</a>
+      <span class="mono">kavárna · denně 8:00–16:00</span>
+    </div>
+
+    <div class="dial">
+      <svg viewBox="0 0 1000 440" role="img" aria-label="Šálek kávy s hodinami a nad ním oblouk otevírací doby od 8:00 do 16:00 se sluncem podle aktuálního času">
+        <path class="arc-future" d="M60 340 A440 300 0 0 1 940 340"/>
+        <path class="arc-past" id="arc-past" pathLength="1" stroke-dasharray="0 1" d="M60 340 A440 300 0 0 1 940 340"/>
+        <circle class="arc-tick" cx="60" cy="340" r="6"/>
+        <circle class="arc-tick" cx="189" cy="128" r="4"/>
+        <circle class="arc-tick" cx="500" cy="40" r="4"/>
+        <circle class="arc-tick" cx="811" cy="128" r="4"/>
+        <circle class="arc-tick" cx="940" cy="340" r="6"/>
+        <text class="arc-label" x="60" y="378" text-anchor="middle">8:00</text>
+        <text class="arc-label" x="150" y="108" text-anchor="end">10:00</text>
+        <text class="arc-label" x="500" y="-10" text-anchor="middle">12:00</text>
+        <text class="arc-label" x="850" y="108">14:00</text>
+        <text class="arc-label" x="940" y="378" text-anchor="middle">16:00</text>
+
+        <ellipse class="cup" cx="500" cy="150" rx="275" ry="16"/>
+        <path class="cup" d="M225 150 C 225 340, 320 405, 440 405 L 560 405 C 680 405, 775 340, 775 150"/>
+        <path class="cup" d="M772 205 C 862 200, 872 305, 742 320"/>
+        <path class="cup" d="M150 424 C 330 446, 670 446, 850 424"/>
+
+        <path class="steam" d="M440 130 C 425 112, 455 96, 440 78"/>
+        <path class="steam" style="animation-delay: 1.2s" d="M500 130 C 485 112, 515 96, 500 78"/>
+        <path class="steam" style="animation-delay: 2.4s" d="M560 130 C 545 112, 575 96, 560 78"/>
+        <circle class="sun-halo" id="sun-halo" cx="60" cy="340" r="46"/>
+        <circle class="sun" id="sun" cx="60" cy="340" r="26"/>
+      </svg>
+      <div class="clock" id="clock" aria-live="off">8:00</div>
+    </div>
+
+    <div class="hero-foot">
+      <p class="state" id="state">Každý den od 8:00 do 16:00.<small>Výběrová káva, snídaně a brunch. Na místě i s sebou.</small></p>
+      <div class="hero-side">
+        <div class="cta">
+          <a class="btn btn-solid" href="#den">Projdi si náš den</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="band b-dawn" id="den" aria-labelledby="h-dawn">
+    <div class="wrap band-in">
+      <div class="when">
+        <time>8:00</time>
+        <span class="mono part">ráno · otevíráme</span>
+        <div class="ruler" style="--p:0"><i></i></div>
+        <div class="ruler-ends mono"><span>8:00</span><span>16:00</span></div>
+      </div>
+      <div>
+        <h2 id="h-dawn">První šálek.</h2>
+        <p class="lead">Výběrová káva připravená s péčí. Vypij ji v klidu u nás, nebo si ji vezmi s sebou cestou do práce.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band b-morning" aria-labelledby="h-morning">
+    <div class="wrap band-in">
+      <div class="when">
+        <time>10:00</time>
+        <span class="mono part">dopoledne · snídaně</span>
+        <div class="ruler" style="--p:0.25"><i></i></div>
+        <div class="ruler-ends mono"><span>8:00</span><span>16:00</span></div>
+      </div>
+      <div>
+        <h2 id="h-morning">Vejce, jak je máš rád.</h2>
+        <p class="lead">Snídaně přesně podle tvé chuti. Vyber si úpravu, chleba k tomu dostaneš vždycky. Nebo si dej bagel.</p>
+
+        <ul class="menu">
+          <li>
+            <span class="dish">Vejce na tři způsoby</span>
+            <span class="desc">S čerstvým chlebem a máslem.
+              <span class="variants"><span>volská oka</span><span>míchaná</span><span>omeleta</span></span>
+            </span>
+            <span class="price">189<small>Kč</small></span>
+          </li>
+          <li>
+            <span class="dish">Shakshuka</span>
+            <span class="desc">Vejce v pikantní rajčatové omáčce s bylinkami.</span>
+            <span class="price">229<small>Kč</small></span>
+          </li>
+          <li>
+            <span class="dish">Bagel s avokádem</span>
+            <span class="desc">Avokádo, rajčata a opražená semínka.</span>
+            <span class="price">199<small>Kč</small></span>
+          </li>
+          <li>
+            <span class="dish">Bagel se šunkou a sýrem</span>
+            <span class="desc">Šunka a roztavený sýr.</span>
+            <span class="price">189<small>Kč</small></span>
+          </li>
+          <li>
+            <span class="dish">Bagel s vejcem a zeleninou</span>
+            <span class="desc">Vejce a čerstvá sezónní zelenina.</span>
+            <span class="price">179<small>Kč</small></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band b-noon" aria-labelledby="h-noon">
+    <div class="wrap band-in">
+      <div class="when">
+        <time>12:00</time>
+        <span class="mono part">kolem poledne · brunch</span>
+        <div class="ruler" style="--p:0.5"><i></i></div>
+        <div class="ruler-ends mono"><span>8:00</span><span>16:00</span></div>
+      </div>
+      <div>
+        <h2 id="h-noon">Kváskový toast.</h2>
+        <p class="lead">Křupavý kváskový chleba a pořádná chuť. Když nevíš, co si dát, začni tímhle.</p>
+
+        <ul class="menu">
+          <li>
+            <span class="dish">Brunch toast</span>
+            <span class="desc">Kváskový toast s vejcem, sýrem a bylinkami.</span>
+            <span class="price">249<small>Kč</small></span>
+          </li>
+          <li>
+            <span class="dish">Toast se slaninou a sýrem</span>
+            <span class="desc">Křupavá slanina a roztavený sýr.</span>
+            <span class="price">239<small>Kč</small></span>
+          </li>
+          <li>
+            <span class="dish">Avokádový toast</span>
+            <span class="desc">Krémové avokádo, citron a chilli.</span>
+            <span class="price">219<small>Kč</small></span>
+          </li>
+          <li>
+            <span class="dish">Toast s vajíčkovou pomazánkou</span>
+            <span class="desc">Jemná domácí pomazánka a pažitka.</span>
+            <span class="price">149<small>Kč</small></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band b-afternoon" aria-labelledby="h-afternoon">
+    <div class="wrap band-in">
+      <div class="when">
+        <time>14:00</time>
+        <span class="mono part">odpoledne · něco sladkého</span>
+        <div class="ruler" style="--p:0.75"><i></i></div>
+        <div class="ruler-ends mono"><span>8:00</span><span>16:00</span></div>
+      </div>
+      <div>
+        <h2 id="h-afternoon">Něco sladkého.</h2>
+        <p class="lead">Nadýchané lívance, smoothie bowl nebo dortík ke kávě. Poslední chvilka klidu, než zavřeme.</p>
+
+        <ul class="menu">
+          <li>
+            <span class="dish">Lívance</span>
+            <span class="desc">S lesním ovocem a zakysanou smetanou.</span>
+            <span class="price">199<small>Kč</small></span>
+          </li>
+          <li>
+            <span class="dish">Smoothie bowl</span>
+            <span class="desc">S čerstvým ovocem a granolou.</span>
+            <span class="price">219<small>Kč</small></span>
+          </li>
+          <li>
+            <span class="dish">Dortík dne</span>
+            <span class="desc">Podle toho, co se ráno upeklo.</span>
+            <span class="price">99<small>Kč</small></span>
+          </li>
+        </ul>
+
+        <div class="menu-head">
+          <h3>Smoothie</h3>
+          <span class="mono">každé 85 Kč</span>
+        </div>
+        <div class="smoothies">
+          <div class="smoothie"><span>jahoda · banán</span></div>
+          <div class="smoothie"><span>mango · ananas</span></div>
+          <div class="smoothie"><span>špenát · kiwi · jablko</span></div>
+          <div class="smoothie"><span>borůvka · jogurt</span></div>
+        </div>
+
+        <div class="menu-head">
+          <h3>Nápoje</h3>
+          <span class="mono">studené</span>
+        </div>
+        <ul class="drinks">
+          <li><span>Domácí limonáda</span><span class="mono">0,4 l · 69 Kč</span></li>
+          <li><span>Ledový čaj</span><span class="mono">0,4 l · 65 Kč</span></li>
+          <li><span>Minerální voda</span><span class="mono">0,33 l · 45 Kč</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band b-close" aria-labelledby="h-close">
+    <div class="wrap">
+      <div class="band-in">
+        <div class="when">
+          <time>16:00</time>
+          <span class="mono part">zavíráme</span>
+          <div class="ruler" style="--p:1"><i></i></div>
+          <div class="ruler-ends mono"><span>8:00</span><span>16:00</span></div>
+        </div>
+        <div>
+          <h2 id="h-close">Zítra zase od 8:00.</h2>
+          <p class="lead">Otevřeno máme každý den v týdnu, i o víkendu. Stav se.</p>
+        </div>
+      </div>
+
+      <div class="sign mono">
+        <span>Oliver's Café</span>
+        <span>káva · snídaně · brunch</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  (function () {
+    var OPEN = 480, CLOSE = 960;
+    var STOPS = [
+      [0, '#1f2346'], [450, '#1f2346'], [480, '#ffcfae'], [600, '#ffe07a'],
+      [720, '#fff1bf'], [840, '#ffb061'], [960, '#ff8a5b'], [990, '#1f2346'], [1440, '#1f2346']
+    ];
+    var fmtParts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Prague', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+
+    function hex(h) { return [1, 3, 5].map(function (i) { return parseInt(h.substr(i, 2), 16); }); }
+    function mix(a, b, t) { var x = hex(a), y = hex(b); return 'rgb(' + x.map(function (v, i) { return Math.round(v + (y[i] - v) * t); }).join(',') + ')'; }
+    function luminance(rgb) { var c = rgb.match(/\d+/g).map(Number); return (0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2]) / 255; }
+    function span(min) { var h = Math.floor(min / 60), m = Math.round(min % 60); return h ? h + ' h ' + m + ' min' : m + ' min'; }
+
+    function tick() {
+      var p = {};
+      fmtParts.formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
+      var m = Number(p.hour) * 60 + Number(p.minute);
+
+      var bg = STOPS[STOPS.length - 1][1];
+      for (var i = 0; i < STOPS.length - 1; i++) {
+        if (m >= STOPS[i][0] && m < STOPS[i + 1][0]) {
+          bg = mix(STOPS[i][1], STOPS[i + 1][1], (m - STOPS[i][0]) / (STOPS[i + 1][0] - STOPS[i][0]));
+          break;
+        }
+      }
+      var root = document.documentElement.style;
+      root.setProperty('--hero-bg', bg);
+      var dark = luminance(bg) < 0.5;
+      root.setProperty('--hero-ink', dark ? '#f7efe2' : '#251a13');
+      root.setProperty('--cup-line', dark ? '#ffffff' : '#251a13');
+
+      document.getElementById('clock').textContent = Number(p.hour) + ':' + p.minute;
+
+      var open = m >= OPEN && m < CLOSE;
+      var prog = Math.min(1, Math.max(0, (m - OPEN) / (CLOSE - OPEN)));
+      var x = 500 - 440 * Math.cos(Math.PI * prog), y = 340 - 300 * Math.sin(Math.PI * prog);
+      ['sun', 'sun-halo'].forEach(function (id) {
+        var el = document.getElementById(id);
+        el.setAttribute('cx', x.toFixed(1));
+        el.setAttribute('cy', y.toFixed(1));
+        el.style.display = open ? '' : 'none';
+      });
+      document.getElementById('arc-past').setAttribute('stroke-dasharray', (m >= CLOSE ? 1 : prog) + ' 1');
+      document.querySelector('.hero').classList.toggle('is-closed', !open);
+
+      var state = document.getElementById('state');
+      if (open) {
+        state.innerHTML = 'Káva je hotová, máme otevřeno.<small>Zavíráme v 16:00, to je za ' + span(CLOSE - m) + '. Výběrová káva, snídaně a brunch.</small>';
+      } else if (m < OPEN) {
+        state.innerHTML = 'Kávovar se teprve nahřívá.<small>Otevíráme v 8:00, to je za ' + span(OPEN - m) + '. Pak tu voní káva.</small>';
+      } else {
+        state.innerHTML = 'Kávovar už odpočívá.<small>Zítra zase od 8:00. Otevřeno každý den v týdnu.</small>';
+      }
+    }
+
+    var timer;
+    function scheduleNextMinute() {
+      clearTimeout(timer);
+      timer = setTimeout(function () { tick(); scheduleNextMinute(); }, 60000 - (Date.now() % 60000) + 50);
+    }
+
+    tick();
+    scheduleNextMinute();
+
+    // Background tabs throttle timers; resync the moment the page is visible again.
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) { tick(); scheduleNextMinute(); }
+    });
+  })();
+</script>
